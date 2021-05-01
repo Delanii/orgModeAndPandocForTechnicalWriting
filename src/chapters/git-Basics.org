@@ -198,6 +198,40 @@ There is also short form of the =git= status report, that is invoked with comman
 
 For example, identifier =MM= means that file was modified, staged and then modified again before committing previous changes.
 
+To get more detailed view of changes in your repository you can use =git diff= command. The basic command
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git diff
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+compares state of your working tree with the current contents of staging area. This command shows what changes you have made, but not yet staged since last commit. The other information you might need is the difference between last commit and content of staging area. Next command does that:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git diff --staged
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+If the default difference view from =git= in terminal is not suitable for you, or you want to use different tool for viewing repository changes, you can use command
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git difftool
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+This command uses application of your choosing to view changes. Command =git difftool --tool-help= lists all applications available to be used by =git difftool= command. You may also configure default =difftool= with =git config= (as =git= informs you when you run this command first time) like so:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git config --global diff.tool vimdiff
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+that uses =vim= text editor as program to view changes. Again, when we get to =magit= package in this blog we will get through settings to use =emacs= for that. For now, setting up =vim= is faster.
+
 ** Adding files to =git= tracking
 
 In order to begin tracking new file you have to /add/ it to =git= tracking list via =git add= command. For example, if you want t start tracking file =test.org=, you would issue following command in terminal:
@@ -224,7 +258,7 @@ git add test.org
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
 
-After adding file to the next future repository snapshot you have to create that snapshot with =git commit= command.
+After adding file to the next future repository snapshot you have to create that snapshot with =git commit= command. When you issue only this command
 
 ** Setting ignored files to =git=
 
