@@ -258,7 +258,19 @@ git add test.org
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
 
-After adding file to the next future repository snapshot you have to create that snapshot with =git commit= command. When you issue only this command
+If you have more than one modified file and you want to add them all to next repository snapshot you can use command
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git add --all
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+that add all modified, new or deleted files to next snapshot commit.
+
+After adding file to the next future repository snapshot you have to create that snapshot with =git commit= command. When you issue this command as is, =git= launches text editor specified as =core.editor= (in [[*Basic setup]] [[#B]] we specified this editor to be =emacs=) to write commit message. The message usually works as description what has been changed with this commit. In the editor text you will also have output of =git status= commented out to remind you what changes are you committing to new repository snapshot.
+
+This is useful if you want to write long commit message. Otherwise, firing up your editor to write a commit message might be a little clunky.
 
 ** Setting ignored files to =git=
 
@@ -277,8 +289,6 @@ You can also ignore full directories. In that case you simply write name of the 
 #+BEGIN_EXAMPLE
 dirname/
 #+END_EXAMPLE
-
-
 
 %%Záložka: progit str. 31%%
 
