@@ -1,0 +1,98 @@
+#+OPTIONS: '
+#+OPTIONS: todo:nil
+
+#+SETUPFILE: setupfileIndividualChapters.org
+
+* Export from org-mode to {{{latex}}} -- basics
+
+%%-- any text --%%
+
+** Customizing export from org-mode to {{{latex}}}
+
+%%-- any introductive text --%%
+
+I like to use KOMA-script classes, because they have a lot more customization features and very accessible documentation. However, exporting to KOMA-script classes from =org-mode= is not supported out of the box. To be able to use this document class you have to modify =org-latex-classes= defined in =ox-latex.el=. In standard Emacs, it would be done with this function !!napiš něco lepšího než tuhle větu!!:
+
+#+LATEX: \begin{elisplistingbox}
+#+BEGIN_SRC elisp :results none :exports code
+(with-eval-after-load 'ox-latex
+   (add-to-list 'org-latex-classes
+             '("scrbook
+               "\\documentclass{scrbook}"
+           [NO-DEFAULT-PACKAGES]
+           [PACKAGES]
+           [EXTRA]"
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+END_SRC
+#+LATEX: \end{elisplistingbox}
+
+Doom Emacs requires only slight modification to this by using =after!= %%?macro?%% instead of =with-eval-after-load= function, so code in our personal =~/.doom.d/config.el= will be:
+
+#+LATEX: \begin{elisplistingbox}
+#+BEGIN_SRC elisp :exports code
+(after! 'ox-latex
+   (add-to-list 'org-latex-classes
+             '("scrbook
+               "\\documentclass{scrbook}"
+           [NO-DEFAULT-PACKAGES]
+           [PACKAGES]
+           [EXTRA]"
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+#+END_SRC
+#+LATEX: \end{elisplistingbox}
+
+%%-- testing the function interactively --%%
+
+Now, when we have working interactive export setup, we can move to incorporating that in our =makefile=. This will give us the opportunity to automate whole exporting process. Emacs has nice feature, that allows to run it in batch mode, that is non-interactively, just for evaluating some elisp:
+
+#+LATEX: \begin{elisplistingbox}
+#+BEGIN_SRC bash
+emacs --batch --eval="(require 'foo)"
+#+END_SRC
+#+LATEX: \end{elisplistingbox}
+
+This can be used to evaluate exporting function defined in =ox-latex.el= that governs export from =org-mode= to {{{latex}}} -- =org-latex-export-to-latex=:
+
+%%--upravit název org-mode souboru--%%
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC bash
+emacs test.org --batch -f org-latex-export-to-latex --kill
+#+END_SRC
+#+LATEX: \end{elisplistingbox}
+
+%%blíže vysvětlit =-f= a =--kill= flags%%
+
+However, with Doom Emacs there is additional hoop to be overtaken, that is, Doom Emacs make it a little bit harder to run Emacs in batch mode, because in batch mode Doom Emacs doesnt load any user configuration. That means you have to load it manually:
+
+#+LATEX: \begin{elisplistingbox}
+#+BEGIN_SRC bash
+emacs --batch -l ~/.doom.d/config.el -f org-latex-export-to-latex --kill
+#+END_SRC
+#+LATEX: \end{elisplistingbox}
+
+If you try to do this with your current =~/.doom.d/config.el=, you probably end up with some kind of error about unknown function, in my case it was =after!= %%?macro?%%. I have found that the easiest option is actually to put this "batch mode configuration" into separate file. Lets name it =latexExportConfig.el= and put it to our other Doom Emacs configuration files into =~/.doom.d= folder.
+
+Now we can simply load this file instead of our full Doom Emacs config:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC bash
+emacs --batch -l ~/.doom.d/latexExportConfig.el -f org-latex-export-to-latex --kill
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+and %%it *should* work (TM) :)%%
+
+** TODO Resources
+
+- Emacs Wiki: %%odkaz na Batch mode na Emacs Wiki%%
+- various Stack Exchange questions and answers: %%Odkaz na general Stack Exchange a na Emacs Stack Exchange%%

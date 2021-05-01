@@ -1,0 +1,8 @@
+* [2021-04-04 Ne]
+
+- added macros for citations and abbreviations
+- added abbreviation and citation settings for \LaTeX and HTML
+
+*
+
+- uploaded to =Github= repository

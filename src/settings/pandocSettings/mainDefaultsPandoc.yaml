@@ -1,0 +1,10 @@
+---
+# Nastavení `pandoc`u jako programu
+#
+
+# Nastavení dokumentu
+
+fontsize: 11pt
+papersize: a4
+
+---

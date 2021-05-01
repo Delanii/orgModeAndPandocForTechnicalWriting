@@ -1,0 +1,41 @@
+from: org+smart
+to: context
+
+# Soubory vkládané do kompilace
+
+input-files:
+- settings/orgMacroDefinitions.org
+- main.org
+
+# Stanovení šablony pro LaTeX writer
+
+template: ./settings/pandocSettings/pandocTemplates/customSimplyfiedTemplate.context
+
+# Vybrání filterů
+
+filters:
+- pandoc-acronyms
+- ./settings/pandocSettings/pandocFilters/pandocVlna.lua
+
+top-level-division: chapter
+number-sections: true
+
+table-of-contents: true
+
+# Doplňková nastavení zápisu dokumentu
+
+wrap: none
+
+strip-comments: false
+strip-empty-paragraphs: true
+
+metadata-files:
+- ./settings/pandocSettings/mainDefaultsPandoc.yaml
+- ./settings/pandocSettings/specificMetadataContext.yaml
+
+log-file: pandocContextLog.log
+
+pdf-engine-opts:
+- "--synctex"
+
+dpi: 1200

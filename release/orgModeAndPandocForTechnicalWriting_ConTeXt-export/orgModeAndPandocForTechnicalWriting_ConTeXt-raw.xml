@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<!--
+
+    input filename   : orgModeAndPandocForTechnicalWriting_ConTeXt
+    processing date  : 2021-04-21 19:51:11+02:00
+    context version  : 2021.03.05 19:11
+    exporter version : 0.35
+
+-->
+
+<?xml-stylesheet type="text/css" href="styles/orgModeAndPandocForTechnicalWriting_ConTeXt-defaults.css" ?>
+<?xml-stylesheet type="text/css" href="styles/orgModeAndPandocForTechnicalWriting_ConTeXt-images.css" ?>
+<?xml-stylesheet type="text/css" href="styles/orgModeAndPandocForTechnicalWriting_ConTeXt-styles.css" ?>
+
+<document author="Tomáš Kruliš" context="2021.03.05 19:11" date="2021-04-21 19:51:11+02:00" file="orgModeAndPandocForTechnicalWriting_ConTeXt" language="en" title="Org-mode and Pandoc for Technical Writing" version="0.35" xmlns:m="http://www.w3.org/1998/Math/MathML">
+ <metadata>
+ </metadata>
+Org-mode and Pandoc for Technical Writing 
+ <break/>
+Tomáš Kruliš 
+ <break/>
+{{{TIME(%d. %m. %Y)}}} 
+ <section detail="title" chain="title" explicit="content" implicit="1" level="2" reference="content">
+  <sectioncaption>
+   <sectiontitle>Contents</sectiontitle>
+  </sectioncaption>
+  <sectioncontent>
+   <list>
+    <listitem detail="chapter" internal="2">
+     <listtag>1</listtag>
+     <listcontent>Introduction</listcontent>
+     <listpage>5</listpage>
+    </listitem>
+    <listitem detail="section" internal="3">
+     <listtag>1.1</listtag>
+     <listcontent>Tools I recommend and rationale why to use them</listcontent>
+     <listpage>5</listpage>
+    </listitem>
+    <listitem detail="chapter" internal="4">
+      <listtag>2</listtag>
+     <listcontent>Basics of Version Control with Git</listcontent>
+     <listpage>7</listpage>
+    </listitem>
+    <listitem detail="section" internal="5">
+     <listtag>2.1</listtag>
+     <listcontent><verbatim>git</verbatim> in a nutshell</listcontent>
+     <listpage>7</listpage>
+    </listitem>
+    <listitem detail="section" internal="8">
+     <listtag>2.2</listtag>
+     <listcontent>How to get <verbatim>git</verbatim></listcontent>
+     <listpage>8</listpage>
+    </listitem>
+    <listitem detail="section" internal="9">
+     <listtag>2.3</listtag>
+     <listcontent>Basic setup</listcontent>
+     <listpage>9</listpage>
+    </listitem>
+    <listitem detail="section" internal="10">
+     <listtag>2.4</listtag>
+     <listcontent>First <verbatim>git</verbatim> repository</listcontent>
+     <listpage>9</listpage>
+    </listitem>
+    <listitem detail="section" internal="11">
+     <listtag>2.5</listtag>
+     <listcontent>Working with <verbatim>git</verbatim> repository</listcontent>
+     <listpage>10</listpage>
+    </listitem>
+    <listitem detail="section" internal="13">
+     <listtag>2.6</listtag>
+     <listcontent>Checking file status in <verbatim>git</verbatim> repository</listcontent>
+     <listpage>11</listpage>
+    </listitem>
+    <listitem detail="section" internal="14">
+     <listtag>2.7</listtag>
+     <listcontent>Adding files to <verbatim>git</verbatim> tracking</listcontent>
+     <listpage>11</listpage>
+    </listitem>
+    <listitem detail="section" internal="15">
+     <listtag>2.8</listtag>
+     <listcontent>Staging and committing modified files in <verbatim>git</verbatim></listcontent>
+     <listpage>11</listpage>
+    </listitem>
+    <listitem detail="section" internal="16">
+     <listtag>2.9</listtag>
+     <listcontent>Setting ignored files to <verbatim>git</verbatim></listcontent>
+     <listpage>12</listpage>
+    </listitem>
+    <listitem detail="section" internal="17">
+     <listtag>2.10</listtag>
+     <listcontent>File operations in <verbatim>git</verbatim> repository</listcontent>
+     <listpage>12</listpage>
+    </listitem>
+    <listitem detail="section" internal="18">
+     <listtag>2.11</listtag>
+     <listcontent>Disclaimer</listcontent>
+     <listpage>12</listpage>
+    </listitem>
+    <listitem detail="chapter" internal="19">
+      <listtag>3</listtag>
+     <listcontent>Export from org-mode to  – basics</listcontent>
+     <listpage>13</listpage>
+    </listitem>
+    <listitem detail="section" internal="20">
+     <listtag>3.1</listtag>
+     <listcontent>Customizing export from org-mode to</listcontent>
+     <listpage>13</listpage>
+    </listitem>
+    <listitem detail="section" internal="21">
+     <listtag>3.2</listtag>
+     <listcontent>Resources</listcontent>
+     <listpage>14</listpage>
+    </listitem>
+   </list>
+  </sectioncontent>
+ </section>
+</document>

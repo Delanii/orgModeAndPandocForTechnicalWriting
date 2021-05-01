@@ -1,0 +1,103 @@
+#+AUTHOR: Tomáš Kruliš
+#+DATE: {{{TIME(%d. %m. %Y)}}}
+#+EMAIL: krulis.tomas.tk@gmail.com
+
+#+BEGIN_COMMENT
+!!General Settings!!
+#+END_COMMENT
+
+#+OPTIONS: '
+#+OPTIONS: todo:nil
+
+#+TITLE: Org-mode and Pandoc for Technical Writing
+
+#+BEGIN_COMMENT
+!!Org Macro Definitions!!
+#+END_COMMENT
+
+#+SETUPFILE: ./settings/orgMacroDefinitions.org
+
+#+BEGIN_COMMENT
+!!LaTeX Export Settings!!
+#+END_COMMENT
+
+#+SETUPFILE: ./settings/setupfileLatex.org
+
+#+BEGIN_COMMENT
+!!HTML Export Settings!!
+#+END_COMMENT
+
+#+SETUPFILE: ./settings/HTMLFullExportSettingsReadtheorg_EmacsExport.org
+
+#+BEGIN_COMMENT
+!!ODT Export Settings!!
+#+END_COMMENT
+
+#+ODT_STYLES_FILE: "./settings/odtStyleFileOrgSource_Emacs.odt"
+
+#+LATEX: \frenchspacing
+#+LATEX: \pagestyle{empty}
+
+#+BEGIN_COMMENT
+!!Table of Contents Inclusions!!
+#+END_COMMENT
+
+#+LATEX: \addtocontents{toc}{\protect\thispagestyle{empty}}
+
+#+TOC: tables
+
+#+LATEX: \listoffigures
+
+#+LATEX: \phantomsection
+#+LATEX: \listoflistings
+
+#+LATEX: \pagestyle{scrheadings}
+
+#+BEGIN_COMMENT
+!!List of Abbreviations!!
+#+END_COMMENT
+
+#+LATEX: \printunsrtglossary[type={abbreviations}]
+
+#+BEGIN_COMMENT
+!!Mainmater!!
+#+END_COMMENT
+
+#+BEGIN_COMMENT
+!!# Introduction!!
+#+END_COMMENT
+
+#+INCLUDE: "./chapters/introduction.org"
+
+#+BEGIN_COMMENT
+!!# Version Controlling with Git -- basics!!
+#+END_COMMENT
+
+#+INCLUDE: "./chapters/git-Basics.org"
+
+#+BEGIN_COMMENT
+!!# Export from org-mode to {{{latex}}} -- basics!!
+#+END_COMMENT
+
+#+INCLUDE: "./chapters/exportToLaTeX-Basics.org"
+
+#+BEGIN_COMMENT
+!!List of Terms!!
+#+END_COMMENT
+
+#+LATEX: \printunsrtglossary[type={main}, style=altlistgroup]
+
+#+BEGIN_COMMENT
+!!Index!!
+#+END_COMMENT
+
+#+LATEX: \renewcommand{\glsextrapostnamehook}[1]{}
+#+LATEX: \printunsrtglossary[type=index,style=bookindex]
+
+#+BEGIN_COMMENT
+!!Bibliography!!
+#+END_COMMENT
+
+#+LATEX: \printbibheading
+#+LATEX: \addcontentsline{toc}{chapter}{Reference}
+#+LATEX: \bibbycategory

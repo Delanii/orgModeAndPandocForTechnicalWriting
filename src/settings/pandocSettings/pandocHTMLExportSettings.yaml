@@ -1,0 +1,14 @@
+from: org+smart
+to: html
+
+input-files:
+  - settings/orgMacroDefinitions.org
+  - main.org
+
+filters:
+  - settings/pandocSettings/pandocFilters/pandocVlna.lua
+
+metadata-files:
+  - settings/pandocSettings/mainDefaultsPandoc.yaml
+
+log-file: pandocHTMLExportLog.log

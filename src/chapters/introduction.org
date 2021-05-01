@@ -1,0 +1,36 @@
+#+OPTIONS: '
+#+OPTIONS: todo:nil
+
+#+SETUPFILE: setupfileIndividualChapters.org
+
+* Introduction
+
+Technical writing is an art in its own. When writing a manual, technical writer has to be the middle ground between software developers and users. As a technical writer you have to bring the subject matter, the software you are writing about, closer to its users. Very often you will have to cooperate directly with software developers and using version control tools such as =git= {{{citation(gitWeb,(Official Webpage))}}}. I found it beneficial to use efficient tools that help you get the task done, and are also extensible to accommodate any need should arise from writing process.
+
+That is why I have decided to make this basic blog, suitable for beginners trying to find good workflow setup for their writing.
+
+** Tools I recommend and rationale why to use them
+
+As noted above, I prefer to use tools that are extensible and allow a lot of options to meet any requirements that I may be facing during writing. The con is, as you might have guessed from the blog title, that these tools are often very complex. Also, I prefer to use open source tools whenever possible.
+
+What does a technical writer need to do his job? For starters, it would be an /text editor/. That is a program that allows you to write text. Simple as that.
+
+I would advise against writing in binary formats like =docx= {{{citation(msword,(Official Webpage))}}} and =odt= {{{citation(libreOffice,(Official Webpage))}}} (which are in fact archives of multiple files). The reason being is that it is actually more challenging to maintain consistent document structure and look with writing in those formats. From my experience, it is much more efficient to focus on content as a writer, and leave upholding the formatting and overall consistency on another application.
+
+For choosing a text editor, well, the name of this blog is "{{{title}}}," and =org-mode= {{{citation(orgModeOfficial,(Official Webpage))}}} is a markup format native to program =GNU/Emacs= {{{citation(gnuEmacs,(Official Webpage))}}} (further referred to simply as =emacs=). Because =org-mode= is just a markup format, you can actually use any text editor to write text in =org-mode= markup. However, =emacs= has the best support for it. If you insist on using different text editor than =emacs=, some alternatives would be =vim= {{{citation(vim,(Official Webpage))}}} or =neovim= {{{citation(neovim,(Official Webpage))}}}, =atom= {{{citation(atom,(Official Webpage))}}} or =notepad++= {{{citation(notepadpp,(Official Webpage))}}}. In that case, you can skip chapters %%chapter references to chapters about%% =emacs= %%and%% =doom emacs= %%command shortcuts%%, which are focused on specifics of working with =emacs=. But for the full span of these blog posts, I will assume that you are using =emacs= as a text editor.
+
+I have chosen =org-mode= as format for technical writing because it allows great workflow management and is tightly integrated into =emacs=. But it is a markup format that is best used for documentation source, not its "presentation" form.
+
+Nowadays most documentation has to be accessible from web, or must be compatible with web-based applications, which means we need our documentation in html format. Often is very handy having access to offline documentation, for which is best choice the pdf format. I personally have been facing requirements to provide documentation also in =.docx= or =.odt= formats.
+
+#+HTML: <h2>References</h2>
+#+HTML:
+#+HTML: <p> <a id="cite-gitWeb">[1] </a> <code>Git</code> Official Webpage: <a href="https://git-scm.com/">https://git-scm.com/</a> </p>
+#+HTML: <p> <a id="cite-msword">[2] </a> Microsoft Office Word Official Webpage: <a href="https://www.microsoft.com/en-us/microsoft-365/word">https://www.microsoft.com/en-us/microsoft-365/word</a> </p>
+#+HTML: <p> <a id="cite-libreOffice">[3] </a> Libre Office project Official Webpage: <a href="https://www.libreoffice.org/">https://www.libreoffice.org/</a> </p>
+#+HTML: <p> <a id="cite-orgModeOfficial">[4] </a> Org mode project Official Webpage: <a href="https://orgmode.org/">https://orgmode.org/</a> </p>
+#+HTML: <p> <a id="cite-emacsOfficial">[5] </a> Emacs Official Webpage: <a href="https://www.gnu.org/software/emacs/">https://www.gnu.org/software/emacs/</a> </p>
+#+HTML: <p> <a id="cite-vimOfficial">[6] </a> Vim Official Webpage: <a href="https://www.vim.org/">https://www.vim.org/</a> </p>
+#+HTML: <p> <a id="cite-neovimOfficial">[7] </a> Neovim Official Webpage: <a href="https://neovim.io/">https://neovim.io/</a> </p>
+#+HTML: <p> <a id="cite-atomOfficial">[8] </a> Atom Text Editor Official Webpage: <a href="https://atom.io/">https://atom.io/</a> </p>
+#+HTML: <p> <a id="cite-notepadppOfficial">[9] </a> Notepad++ Official Webpage: <a href="https://notepad-plus-plus.org/">https://notepad-plus-plus.org/</a> </p>

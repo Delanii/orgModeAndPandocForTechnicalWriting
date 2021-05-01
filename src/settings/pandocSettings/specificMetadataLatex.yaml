@@ -1,0 +1,14 @@
+---
+# Nastavení dokumentu
+
+documentclass: scrbook
+classoption:
+- openright
+
+geometry:
+- "left=2.5cm"
+- "right=2cm"
+- "bottom=3cm"
+- "headheight=15.3pt"
+
+---

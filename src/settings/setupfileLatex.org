@@ -1,0 +1,407 @@
+#+BEGIN_COMMENT
+!!Documentclass declaration and documentclass settings!!
+#+END_COMMENT
+
+#+LaTeX_CLASS: scrbook
+#+LaTeX_CLASS_OPTIONS: [a4paper, 11pt, twoside, openright]
+
+#+BEGIN_COMMENT
+!!Additional LaTeX packages!!
+#+END_COMMENT
+
+#+BEGIN_COMMENT
+!!LaTeX language settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage [english, shorthands=off]{babel}
+
+#+BEGIN_COMMENT
+!!LaTeX font settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage[no-math]{fontspec}
+#+LATEX_HEADER: \addtokomafont{disposition}{\rmfamily}
+#+LATEX_HEADER: \addtokomafont{title}{\normalfont}
+#+LATEX_HEADER: \addtokomafont{pageheadfoot}{\normalfont}
+
+#+BEGIN_COMMENT
+!!LaTeX page settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage [inner=2.5cm, outer=2cm, bottom=3cm, headheight=14.1pt] {geometry}
+
+#+LATEX_HEADER: \usepackage[automark]{scrlayer-scrpage}
+
+#+LATEX_HEADER: \KOMAoptions{%
+#+LATEX_HEADER: headsepline=true%
+#+LATEX_HEADER: }
+
+#+BEGIN_COMMENT
+!!LaTeX page header settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \clearpairofpagestyles
+
+#+LATEX_HEADER: \lehead[]{\leftmark}
+#+LATEX_HEADER: \cehead[]{}
+#+LATEX_HEADER: \rehead[]{}
+#+LATEX_HEADER: \lohead[]{}
+#+LATEX_HEADER: \cohead[]{}
+#+LATEX_HEADER: \rohead[]{\rightmark}
+
+#+BEGIN_COMMENT
+!!LaTeX page footer settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \lefoot[]{}
+#+LATEX_HEADER: \cefoot[]{\pagemark}
+#+LATEX_HEADER: \refoot[]{}
+#+LATEX_HEADER: \lofoot[]{}
+#+LATEX_HEADER: \cofoot[]{\pagemark}
+#+LATEX_HEADER: \rofoot[]{}
+
+#+BEGIN_COMMENT
+!!LaTeX picture embedding settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage{graphicx}
+#+LATEX_HEADER: \graphicspath{{./src}}
+
+#+BEGIN_COMMENT
+!!LaTeX color settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage[dvipsnames,x11names,svgnames,table]{xcolor}
+#+LATEX_HEADER: \usepackage{luacolor}
+
+#+BEGIN_COMMENT
+!!LaTeX additional typography settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage{microtype}
+
+#+LATEX_HEADER: \linespread{1.0}
+#+LATEX_HEADER: \clubpenalty=500\relax
+#+LATEX_HEADER: \widowpenalty=500\relax
+
+#+LATEX_HEADER:\usepackage[skip=0.2\baselineskip plus 2pt\relax,%
+#+LATEX_HEADER:parfill%
+#+LATEX_HEADER:]{parskip}
+
+#+LATEX_HEADER: \usepackage[hyphenation,%
+#+LATEX_HEADER: %draft,% Zapíná zvýrazňování typografických nedostatků
+#+LATEX_HEADER: parindent,%
+#+LATEX_HEADER: lastparline,%
+#+LATEX_HEADER: nosingleletter,%
+#+LATEX_HEADER: homeoarchy,%
+#+LATEX_HEADER: rivers%
+#+LATEX_HEADER: ]{impnattypo}
+
+#+BEGIN_COMMENT
+!!LaTeX packages for programming interface enhancement!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage{etoolbox}
+#+LATEX_HEADER: \usepackage{import}
+
+#+BEGIN_COMMENT
+!!LaTeX picture drawing settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage{tikz}
+
+#+BEGIN_COMMENT
+!!LaTeX table settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage{array}
+#+LATEX_HEADER: \usepackage{booktabs}
+#+LATEX_HEADER: \usepackage{tabularx}
+#+LATEX_HEADER: \newcolumntype{C}{>{\centering\arraybackslash}X}
+#+LATEX_HEADER: \newcounter{tblerows}
+#+LATEX_HEADER: \expandafter\let\csname c@tblerows\endcsname\rownum
+
+#+LATEX_HEADER: \usepackage{longtable}
+
+#+LATEX_HEADER: \setlength{\tabcolsep}{5pt}
+#+LATEX_HEADER: \renewcommand{\arraystretch}{1.6}
+
+#+BEGIN_COMMENT
+!!LaTeX caption settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage{capt-of}
+
+#+BEGIN_COMMENT
+!!LaTeX table of contents settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \KOMAoptions{
+#+LATEX_HEADER:    listof=totoc,
+#+LATEX_HEADER:    listof=entryprefix,
+#+LATEX_HEADER: }
+
+#+LATEX_HEADER: \DeclareTOCStyleEntries[dynnumwidth=true]{default}{chapter,section,subsection,subsubsection}
+
+#+LATEX_HEADER: \usepackage{scrhack}
+
+#+BEGIN_COMMENT
+!!LaTeX list settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage{enumitem}
+#+LATEX_HEADER: \setlist{noitemsep}
+#+LATEX_HEADER: \setenumerate[0]{label=\arabic*.}
+
+#+BEGIN_COMMENT
+!!LaTeX fancy colored boxes settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage[skins, vignette, breakable, hooks, xparse, minted, raster]{tcolorbox}
+#+LATEX_HEADER: \tcbset{listing engine=minted}
+
+#+BEGIN_COMMENT
+!!LaTeX minted settings for source code syntax highlighting!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usemintedstyle{cl}
+#+LATEX_HEADER: \setminted{
+#+LATEX_HEADER: linenos=true,%
+#+LATEX_HEADER: breaklines=true,%
+#+LATEX_HEADER: breakanywhere,%
+#+LATEX_HEADER: numbersep=12pt,%
+#+LATEX_HEADER: xleftmargin=9pt%
+#+LATEX_HEADER: }
+
+#+LATEX_HEADER: \renewcommand{\theFancyVerbLine}{
+#+LATEX_HEADER: \textcolor[rgb]{0.4,0,1}{\scriptsize\arabic{FancyVerbLine}}}
+#+LATEX_HEADER: \makeatletter
+#+LATEX_HEADER: % add tcblistings to \jobname.lol (list of listings)
+#+LATEX_HEADER: \tcbset{
+#+LATEX_HEADER: addtolol/.style={list entry={\kvtcb@title},add to list={lol}{subsection}},
+#+LATEX_HEADER: }
+#+LATEX_HEADER: \makeatother
+
+#+LATEX_HEADER: \tcbset{every box/.style={enhanced,%
+#+LATEX_HEADER: breakable,%
+#+LATEX_HEADER: }
+#+LATEX_HEADER: }
+
+#+LATEX_HEADER: \tcbset{mylistingbox/.style 2 args={% Zakomentované řádky fungují, avšak byly vypnuty pro zjednodušení čtení souboru - jakékoli PC snažící se načíst tenhle soubor to nedává ...
+#+LATEX_HEADER: addtolol,
+#+LATEX_HEADER: colback=#1!10,%
+#+LATEX_HEADER: interior style={left color=#1!10,
+#+LATEX_HEADER:   right color=#2!10},
+#+LATEX_HEADER: colframe=#1!75!black,%
+#+LATEX_HEADER:%	borderline={0.5pt}{-2pt}{#1},
+#+LATEX_HEADER:%	drop fuzzy shadow,
+#+LATEX_HEADER: fonttitle=\bfseries,
+#+LATEX_HEADER: overlay={\begin{tcbclipinterior}\fill[red!10!blue!10!white] (frame.south west)
+#+LATEX_HEADER:   rectangle ([xshift=7mm]frame.north west);\end{tcbclipinterior}},%
+#+LATEX_HEADER: watermark tikz app on=broken is {\node[draw, circle, line width=0.2mm, align=center] {\hspace{5pt}{\Roman{tcbbreakpart}}\hspace{5pt}};},
+#+LATEX_HEADER: watermark zoom=0.25,
+#+LATEX_HEADER:%	finish raised fading vignette={size=3mm},
+#+LATEX_HEADER: }
+#+LATEX_HEADER: }
+
+#+BEGIN_COMMENT
+!!LaTeX settings for fancy Elisp listing box!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \newcounter{elispcounter}
+#+LATEX_HEADER: \newcounter{bashcounter}
+
+#+LATEX_HEADER: \NewTCBListing[use counter=elispcounter]{elisplistingbox}{ !O{Emacs~lisp~listing~\theelispcounter}}{
+#+LATEX_HEADER: mylistingbox={purple}{Aquamarine},%style
+#+LATEX_HEADER: %	addtolol,%
+#+LATEX_HEADER: minted language=elisp,
+#+LATEX_HEADER: listing only,%
+#+LATEX_HEADER: center lower,%
+#+LATEX_HEADER: title=#1,
+#+LATEX_HEADER: after title={\hfill\colorbox{black}{\bfseries \textcolor{white}{Elisp}}},
+#+LATEX_HEADER: underlay middle and last={%
+#+LATEX_HEADER: \ifnumequal{\numexpr\tcbsegmentstate}{2}{\begin{tcbclipinterior}\fill[red!10!blue!10!white] ([xshift=-7mm]frame.south east)
+#+LATEX_HEADER:   rectangle (frame.north east) node [anchor=south east,rotate=90] {\bfseries \textcolor{black}{#1 -- Output}};\end{tcbclipinterior}%
+#+LATEX_HEADER: }
+#+LATEX_HEADER: {\begin{tcbclipinterior}\fill[red!10!blue!10!white] ([xshift=-7mm]frame.south east)
+#+LATEX_HEADER:   rectangle (frame.north east) node [anchor=south east,rotate=90] {\bfseries \textcolor{black}{#1}};\end{tcbclipinterior}%
+#+LATEX_HEADER:}
+#+LATEX_HEADER:},%
+#+LATEX_HEADER:}
+
+#+LATEX_HEADER: \NewTCBListing[use counter=bashcounter]{bashlistingbox}{ !O{Bash~shell~listing~\thebashcounter}}{
+#+LATEX_HEADER: mylistingbox={Gray}{Fuchsia},%style
+#+LATEX_HEADER: %	addtolol,%
+#+LATEX_HEADER: minted language=elisp,
+#+LATEX_HEADER: listing only,%
+#+LATEX_HEADER: center lower,%
+#+LATEX_HEADER: title=#1,
+#+LATEX_HEADER: after title={\hfill\colorbox{black}{\bfseries \textcolor{white}{bash}}},
+#+LATEX_HEADER: underlay middle and last={%
+#+LATEX_HEADER: \ifnumequal{\numexpr\tcbsegmentstate}{2}{\begin{tcbclipinterior}\fill[red!10!blue!10!white] ([xshift=-7mm]frame.south east)
+#+LATEX_HEADER:   rectangle (frame.north east) node [anchor=south east,rotate=90] {\bfseries \textcolor{black}{#1 -- Output}};\end{tcbclipinterior}%
+#+LATEX_HEADER: }
+#+LATEX_HEADER: {\begin{tcbclipinterior}\fill[red!10!blue!10!white] ([xshift=-7mm]frame.south east)
+#+LATEX_HEADER:   rectangle (frame.north east) node [anchor=south east,rotate=90] {\bfseries \textcolor{black}{#1}};\end{tcbclipinterior}%
+#+LATEX_HEADER:}
+#+LATEX_HEADER:},%
+#+LATEX_HEADER:}
+
+#+BEGIN_COMMENT
+!!LaTeX inline code writing settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \fvinlineset{breaklines,%
+#+LATEX_HEADER:  breakafter=\space,
+#+LATEX_HEADER:  breakanywhere
+#+LATEX_HEADER:}
+
+#+LATEX_HEADER: \usepackage[htt]{hyphenat}
+
+#+LATEX_HEADER: \usepackage{lua-ul}
+#+LATEX_HEADER: \LuaULSetHighLightColor{Snow2}
+
+#+LATEX_HEADER: \newcommand{\hltt}[1]{
+#+LATEX_HEADER: \highLight{\texttt{#1}}
+#+LATEX_HEADER: }
+
+#+BEGIN_COMMENT
+!!LaTeX package for working with data!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage{datatool}
+
+#+LATEX_HEADER: \usepackage{scontents}
+#+LATEX_HEADER: \setupsc{overwrite={true}}
+
+#+BEGIN_COMMENT
+!!LaTeX packages for writing science stuff ... !!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage{chemmacros}
+#+LATEX_HEADER: \usepackage{siunitx}
+
+#+BEGIN_COMMENT
+!!LaTeX packages for writing math!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage{MnSymbol}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{mathtools}
+
+#+BEGIN_COMMENT
+!!LaTeX package for writing smart quotes, and more!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage{csquotes}
+
+#+LATEX_HEADER: % Psaní textových citací - nikoli blokových
+
+#+LATEX_HEADER: \newcommand{\cituj}[1]{%
+#+LATEX_HEADER: (\textit{citace}) \enquote{#1} (\textit{konec citace})%
+#+LATEX_HEADER: }
+
+#+BEGIN_COMMENT
+!!LaTeX package for defining lua functions, mostly in terms of filters!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage{luacode}
+#+LATEX_HEADER: \import{./src/settings}{luacode.tex}
+
+#+BEGIN_COMMENT
+!!LaTeX packages for creating bibliographies!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage[style=numeric, backend=biber, refsegment=chapter, defernumbers=true, mincrossrefs=1, backref=true, backrefstyle=three, sorting=none]{biblatex}
+
+#+LATEX_HEADER: \DeclareBibliographyCategory{versioning}
+#+LATEX_HEADER: \DeclareBibliographyCategory{officeTools}
+#+LATEX_HEADER: \DeclareBibliographyCategory{markupFormats}
+#+LATEX_HEADER: \DeclareBibliographyCategory{textEditors}
+
+#+LATEX_HEADER: \AtDataInput{%
+#+LATEX_HEADER:   \ifkeyword{versioning}
+#+LATEX_HEADER:     {\addtocategory{versioning}{\thefield{entrykey}}}
+#+LATEX_HEADER:     {}%
+#+LATEX_HEADER:   \ifkeyword{officeTools}
+#+LATEX_HEADER:     {\addtocategory{officeTools}{\thefield{entrykey}}}
+#+LATEX_HEADER:     {}%
+#+LATEX_HEADER:   \ifkeyword{markupFormats}
+#+LATEX_HEADER:     {\addtocategory{markupFormats}{\thefield{entrykey}}}
+#+LATEX_HEADER:     {}%
+#+LATEX_HEADER:   \ifkeyword{textEditors}
+#+LATEX_HEADER:     {\addtocategory{textEditors}{\thefield{entrykey}}}
+#+LATEX_HEADER:     {}%
+#+LATEX_HEADER: }
+
+#+LATEX_HEADER: \defbibheading{versioning}{\section*{Versioning Software References}}
+#+LATEX_HEADER: \defbibheading{officeTools}{\section*{WSIWYG Office Tools}}
+#+LATEX_HEADER: \defbibheading{markupFormats}{\section*{Markup Formats suitable for Technical Writing}}
+#+LATEX_HEADER: \defbibheading{textEditors}{\section*{Text Editors}}
+
+#+LATEX_HEADER: \addbibresource{./src/settings/references.bib}
+
+#+BEGIN_COMMENT
+!!LaTeX packages for hypertext crossreferences!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage{varioref}
+#+LATEX_HEADER: \usepackage[pdfencoding=auto]{hyperref}
+#+LATEX_HEADER: \hypersetup
+#+LATEX_HEADER: {
+#+LATEX_HEADER: 	hidelinks,%
+#+LATEX_HEADER: 	hypertexnames=true,%
+#+LATEX_HEADER:     linktoc=all,
+#+LATEX_HEADER: }
+
+#+LATEX_HEADER: \usepackage{bookmark}
+#+LATEX_HEADER: \bookmarksetup{
+#+LATEX_HEADER:   open,
+#+LATEX_HEADER: %  depth=8,
+#+LATEX_HEADER:   openlevel=0,
+#+LATEX_HEADER:   numbered,
+#+LATEX_HEADER: }
+
+#+LATEX_HEADER: \AtBeginDocument{
+#+LATEX_HEADER:   \label{CorrectFirstPageLabel}
+#+LATEX_HEADER:   \def\fpage{\pageref{CorrectFirstPageLabel}}
+#+LATEX_HEADER: }
+
+#+LATEX_HEADER: \usepackage{cleveref}
+
+#+BEGIN_COMMENT
+!!LaTeX packages for Glossaries and lists of Acronyms!!
+#+END_COMMENT
+
+#+LATEX_HEADER: \usepackage[record, nopostdot, abbreviations,% create "abbreviations" glossary
+#+LATEX_HEADER: 		index,%
+#+LATEX_HEADER:                     nostyles, stylemods={all},% do the adjustments for the longbooktabs styles
+#+LATEX_HEADER:                     ]{glossaries-extra}
+
+#+LATEX_HEADER: %\makeglossaries
+
+#+LATEX_HEADER: \setglossarystyle{long-booktabs}
+#+LATEX_HEADER: \setabbreviationstyle[acronym]{long-short-user}
+
+#+LATEX_HEADER: \AtBeginDocument{%
+#+LATEX_HEADER: \GlsXtrLoadResources[selection={all},%
+#+LATEX_HEADER: 			src={src/settings/tertiaryEntries},%
+#+LATEX_HEADER: 			type={index},
+#+LATEX_HEADER: 			label-prefix={idx.},
+#+LATEX_HEADER:  			dual-prefix={},
+#+LATEX_HEADER:  			cs-label-prefix={},
+#+LATEX_HEADER: 			sort={en},
+#+LATEX_HEADER:  			sort-field={name},
+#+LATEX_HEADER:  			dual-sort={en},
+#+LATEX_HEADER:  			charset=UTF-8,%
+#+LATEX_HEADER: 			combine-dual-locations={primary},
+#+LATEX_HEADER: 			cs-label-prefix={},
+#+LATEX_HEADER: 			]}
+
+#+BEGIN_COMMENT
+!!LaTeX Index settings!!
+#+END_COMMENT
+
+#+LATEX_HEADER: % provide commands that work like \gls etc for the @index entries
+#+LATEX_HEADER: % (that don't have a dual counterpart)
+#+LATEX_HEADER: \glsxtrnewglslike{idx.}{\idx}{\idxpl}{\Idx}{\Idxpl}

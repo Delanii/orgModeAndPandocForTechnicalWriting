@@ -1,0 +1,3 @@
+#+MACRO: latex @@latex:\LaTeX\@@ @@html:LaTeX@@ @@odt:<text:span text:style-name="Text_20_body">LaTeX</text:span>@@
+
+This is a test of =org-mode= macros expansion with =pandoc=: {{{latex}}}.

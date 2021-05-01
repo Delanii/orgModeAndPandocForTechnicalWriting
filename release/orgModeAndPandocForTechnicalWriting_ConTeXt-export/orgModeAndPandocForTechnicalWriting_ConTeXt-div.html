@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!--
+
+    input filename   : orgModeAndPandocForTechnicalWriting_ConTeXt
+    processing date  : 2021-04-21 19:51:11+02:00
+    context version  : 2021.03.05 19:11
+    exporter version : 0.35
+
+-->
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:math="http://www.w3.org/1998/Math/MathML">
+
+    <head>
+
+        <meta charset="utf-8"/>
+
+        <title>Org-mode and Pandoc for Technical Writing</title>
+
+<link type="text/css" rel="stylesheet" href="styles/orgModeAndPandocForTechnicalWriting_ConTeXt-defaults.css" />
+<link type="text/css" rel="stylesheet" href="styles/orgModeAndPandocForTechnicalWriting_ConTeXt-images.css" />
+<link type="text/css" rel="stylesheet" href="styles/orgModeAndPandocForTechnicalWriting_ConTeXt-styles.css" />
+
+
+    </head>
+    <body>
+        <div class="document" xmlns="http://www.pragma-ade.com/context/export">
+
+<div class="warning">Rendering can be suboptimal because there is no default/fallback css loaded.</div>
+
+<div>
+ 
+Org-mode and Pandoc for Technical Writing 
+ <div class="break"><!--empty--></div>
+Tomáš Kruliš 
+ <div class="break"><!--empty--></div>
+{{{TIME(%d. %m. %Y)}}} 
+ <div class="section title level-2" id="content">
+  <div class="sectioncaption">
+   <div class="sectiontitle">Contents</div>
+  </div>
+  <div class="sectioncontent">
+   <div class="list">
+    <div class="listitem chapter" href="#aut-2" onclick="location.href=&apos;#aut-2&apos;">
+     <div class="listtag">1</div>
+     <div class="listcontent">Introduction</div>
+     <div class="listpage">5</div>
+    </div>
+    <div class="listitem section" href="#aut-3" onclick="location.href=&apos;#aut-3&apos;">
+     <div class="listtag">1.1</div>
+     <div class="listcontent">Tools I recommend and rationale why to use them</div>
+     <div class="listpage">5</div>
+    </div>
+    <div class="listitem chapter" href="#aut-4" onclick="location.href=&apos;#aut-4&apos;">
+      <div class="listtag">2</div>
+     <div class="listcontent">Basics of Version Control with Git</div>
+     <div class="listpage">7</div>
+    </div>
+    <div class="listitem section" href="#aut-5" onclick="location.href=&apos;#aut-5&apos;">
+     <div class="listtag">2.1</div>
+     <div class="listcontent"><div class="verbatim">git</div> in a nutshell</div>
+     <div class="listpage">7</div>
+    </div>
+    <div class="listitem section" href="#aut-8" onclick="location.href=&apos;#aut-8&apos;">
+     <div class="listtag">2.2</div>
+     <div class="listcontent">How to get <div class="verbatim">git</div></div>
+     <div class="listpage">8</div>
+    </div>
+    <div class="listitem section" href="#aut-9" onclick="location.href=&apos;#aut-9&apos;">
+     <div class="listtag">2.3</div>
+     <div class="listcontent">Basic setup</div>
+     <div class="listpage">9</div>
+    </div>
+    <div class="listitem section" href="#aut-10" onclick="location.href=&apos;#aut-10&apos;">
+     <div class="listtag">2.4</div>
+     <div class="listcontent">First <div class="verbatim">git</div> repository</div>
+     <div class="listpage">9</div>
+    </div>
+    <div class="listitem section" href="#aut-11" onclick="location.href=&apos;#aut-11&apos;">
+     <div class="listtag">2.5</div>
+     <div class="listcontent">Working with <div class="verbatim">git</div> repository</div>
+     <div class="listpage">10</div>
+    </div>
+    <div class="listitem section" href="#aut-13" onclick="location.href=&apos;#aut-13&apos;">
+     <div class="listtag">2.6</div>
+     <div class="listcontent">Checking file status in <div class="verbatim">git</div> repository</div>
+     <div class="listpage">11</div>
+    </div>
+    <div class="listitem section" href="#aut-14" onclick="location.href=&apos;#aut-14&apos;">
+     <div class="listtag">2.7</div>
+     <div class="listcontent">Adding files to <div class="verbatim">git</div> tracking</div>
+     <div class="listpage">11</div>
+    </div>
+    <div class="listitem section" href="#aut-15" onclick="location.href=&apos;#aut-15&apos;">
+     <div class="listtag">2.8</div>
+     <div class="listcontent">Staging and committing modified files in <div class="verbatim">git</div></div>
+     <div class="listpage">11</div>
+    </div>
+    <div class="listitem section" href="#aut-16" onclick="location.href=&apos;#aut-16&apos;">
+     <div class="listtag">2.9</div>
+     <div class="listcontent">Setting ignored files to <div class="verbatim">git</div></div>
+     <div class="listpage">12</div>
+    </div>
+    <div class="listitem section" href="#aut-17" onclick="location.href=&apos;#aut-17&apos;">
+     <div class="listtag">2.10</div>
+     <div class="listcontent">File operations in <div class="verbatim">git</div> repository</div>
+     <div class="listpage">12</div>
+    </div>
+    <div class="listitem section" href="#aut-18" onclick="location.href=&apos;#aut-18&apos;">
+     <div class="listtag">2.11</div>
+     <div class="listcontent">Disclaimer</div>
+     <div class="listpage">12</div>
+    </div>
+    <div class="listitem chapter" href="#aut-19" onclick="location.href=&apos;#aut-19&apos;">
+      <div class="listtag">3</div>
+     <div class="listcontent">Export from org-mode to  – basics</div>
+     <div class="listpage">13</div>
+    </div>
+    <div class="listitem section" href="#aut-20" onclick="location.href=&apos;#aut-20&apos;">
+     <div class="listtag">3.1</div>
+     <div class="listcontent">Customizing export from org-mode to</div>
+     <div class="listpage">13</div>
+    </div>
+    <div class="listitem section" href="#aut-21" onclick="location.href=&apos;#aut-21&apos;">
+     <div class="listtag">3.2</div>
+     <div class="listcontent">Resources</div>
+     <div class="listpage">14</div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+        </div>
+    </body>
+</html>

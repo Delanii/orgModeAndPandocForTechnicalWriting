@@ -1,0 +1,14 @@
+!config
+preambles:
+    fullcompile: |
+        % arara: lualatex: { synctex: true, shell: true }
+        % arara: bib2gls: { group: true }
+        % arara: lualatex: { synctex: true, shell: true }
+        % arara: bib2gls: { group: true }
+        % arara: lualatex: { synctex: true, shell: true }
+        % arara: biber
+        % arara: lualatex: { synctex: true, shell: true }
+        % arara: biber
+        % arara: lualatex: { synctex: true, shell: true }
+        % arara: lualatex: { synctex: true, shell: true }
+        % arara: lualatex: { synctex: true, shell: true }

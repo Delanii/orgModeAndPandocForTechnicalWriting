@@ -1,0 +1,259 @@
+#+OPTIONS: '
+#+OPTIONS: todo:nil
+
+#+SETUPFILE: setupfileIndividualChapters.org
+
+* Basics of Version Control with Git
+
+When you start a technical writing project, you can easily go by with an folder in your PC and thats it. But as the project grows, or you meet with more requirements from the client (maybe like to add another document format), you might wish to be able to test things out, or to comfortably revert from one state of things to another. That can be managed within folders, but sooner or later it will become clumsy and error prone. Other thing is, that client might straight from the beginning want you to contribute to some versioning system, to keep the manual in sync with current version of the software.
+
+For those cases, you will have to use a version control system. Nowadays, the absolutely most used one is =git=. =git= is by definition "{{{glsEntry(dvcs,distributed version control system (DVCS))}}}" {{{citation(progit,Pro Git Book)}}}. How does it work? Software acting as version control is checking your files each time it is invoked, storing changes that have been made to those files in its own database. That way, you can revert to any previously recorded state of those files.
+
+Now the "distributed" part means that the whole system does not have a central server (like it is with {{{glsEntry(cvcs,centralized version control system (CVCS))}}}), but everything from the repository is mirrored to client local PC, even file history. This decentralized model brings more reliability, since if the server would went out of operation, the full repository can be revived from another clone. Also, these systems cope very well with multiple repository instances, so you can collaborate on your project easily with more people.
+
+One of those {{{glsEntry(dvcs,DVCS)}}} is =git=. It is one of the most used {{{glsEntry(dvcs,DVCS)}}} today, maybe even THE most used {{{glsEntry(dvcs,DVCS)}}}. Especially in open source development.
+
+** =git= in a nutshell
+:PROPERTIES:
+:CUSTOM_ID: sec:gitInANutshell
+:END:
+
+Little contrary to previous description of the version control systems, =git= does not store changes to a file in time. Instead, =git= is taking snapshots of the whole repository filesystem in each commit. If there were no changes to an particular file compared to previous commit, =git= just stores reference to that file. =git= have uses hashes. Everything in =git= is checksummed with SHA-1 hash. SHA-1 hash is 40 character string consisting of hexadecimal characters (0 -- 9 and a -- f) and calculated based on the file contents. All of =git= actions only add data. It takes an effort to make =git= erase any data.
+
+#+CAPTION: =git= storing data as snapshots of the project over time, source: Pro Git Book, @@latex:\protect\cite{progit}@@ @@html: <a href="#cite-progit">here</a>@@
+#+NAME: fig:git-basics_snapshots
+[[../pictures/git-basics_snapshots.png]]
+
+=git= recognizes three states of files: /modified/, /staged/ and /committed/. <<target:gitFileStates>>
+
+- modified means that you have changed the file but have not committed it to your database yet.
+- staged means that you have marked a modified file in its current version to go into your next commit snapshot
+- committed means that the data is safely stored in your local database
+
+=git= representation of the project has three main parts:
+
+- working directory (project files currently on local PC)
+- staging area (file that stores information about staged files)
+- =.git= directory (stores database of all the objects in your project)
+
+#+CAPTION: Main parts of =git= project repository, source: Pro Git Book, @@latex:\protect\cite{progit}@@ @@html: <a href="#cite-progit">here</a>@@
+#+NAME: fig:git-basics_areas
+[[../pictures/git-basics_areas.png]]
+
+Basic =git= workflow can be something like this:
+
+1. You modify files in your working directory (working tree)
+2. you selectively stage those changes that you want to be part of your next commit. Only those changes are added to the staging area
+3. you commit those changes
+
+Committing clears the staging area and uses its content to create new snapshot of your working tree. This snapshot is stored in your =.git= directory.
+
+** How to get =git=
+
+For getting =git= on GNU/Linux I would recommend using your distribution package manager. The package will be most probably named "git," so for example with =apt= package manager on Ubuntu or other debian based GNU/Linux distribution the command would be:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC bash
+sudo apt-get install git
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+The other installation option is compiling =git= from source code, but that could be for a little bit advanced users.
+
+After the installation you can check whether =git= is working or not. As with most programs, you can use following command:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC bash
+git --version
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+If you get =git= version info on the terminal without any error, you are good to go.
+
+** Basic setup
+
+=git= has its own tool for configuring. You can execute it with command =git config=. =git= configuration is divided in three layers: /system/, /global/ and /local/.
+
+1. /system/: located in =/etc/gitconfig= file, requires admin rights to allow any modification. It is accessed via command:
+   #+LATEX: \begin{bashlistingbox}
+   #+BEGIN_SRC bash
+   git config --system
+   #+END_SRC
+   #+LATEX: \end{bashlistingbox}
+2. /global/: located in =~/.gitconfig= or in =~/.config/git/config= files is configuration for current user. It is accessed with command:
+
+   #+LATEX: \begin{bashlistingbox}
+   #+BEGIN_SRC bash
+   git config --global
+   #+END_SRC
+   #+LATEX: \end{bashlistingbox}
+
+3. /local/: located in =.git/config= file in project repository. It is accessed via command:
+
+   #+LATEX: \begin{bashlistingbox}
+   #+BEGIN_SRC bash
+   git config --local
+   #+END_SRC
+   #+LATEX: \end{bashlistingbox}
+
+You can view your current settings with this command:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC bash
+git config --list --show-origin
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+or you can view value of specific configuration variable with command:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC bash
+git config <variable.name>
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+If you didn't set any =git= configuration variables before, it might return nothing. You can set =git= configuration variables with those commands:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC bash
+git config --global user.name "John Doe"
+git config --global user.email my.email@my.org
+git config --global core.editor emacs
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+Setting =emacs= as your core editor for dealing with =git= will prove handy later on when we will discover =magit= =emacs= package. Also, this blog is about =emacs= ... List of all =git= configuration variables can be accessed via =--help= flag:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC bash
+git config --help
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+** TODO First =git= repository
+
+You can get a =git= repository in two ways:
+
+- /clone/ an already /existing/ repository using its web url address, for example like so:
+
+  %%přidat git clone odkaz na repositář projektu%%
+
+  which is actually the repository of this blog and full book releases of this blog.
+
+- you can /create one/ yourself on your local PC. To do that, go into your project folder and type command
+
+  #+LATEX: \begin{bashlistingbox}
+  #+BEGIN_SRC bash
+  git init
+  #+END_SRC
+  #+LATEX: \end{bashlistingbox}
+
+Using any of these options you get =.git= folder added to your project folder. This folder contains all of the =git= files necessary to maintain version control over your project. But only by initializing =git= repository doesn't make anything tracked by =git=. There are more steps to achieve that.
+
+First, you have to add files, that you want to have tracked, to the initialized repository. For example:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC bash
+git add *.org
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+which adds to initialized =git= repository all =.org= files for version control. By issuing =git add= command, those files get only into staging area (as described in [[#sec:gitInANutshell][previous section]]). After adding the files, you have to commit them:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC bash
+git commit -m "Initial commit."
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+That also means, that you can have in the project folder also files that are not tracked by =git=. =git= doesnt mind. Until you /add/ them to =git= tracking that is.
+
+** Working with =git= repository
+
+Basic workflow with =git= could be described as follows:
+
+As you work with your project files, you modify them. If you have added them to =git= tracking, =git= sees them as /modified/, because you changed them from last commit. When you want to make another "version," or project snapshot, you can selectively add each modified file with =git add=, or you can use =--all= flag to add all modified files to =git= staging area. =git add= command is multipurpose command, so you will definitely use it a lot. Finally, you /commit/ all the staged files to =git= with =git commit -m "Informative message."= to create new snapshot of files tracked by =git=.
+
+#+CAPTION: =git= workflow and file status changes as you work with them, source: Pro Git Book, @@latex:\protect\cite{progit}@@ @@html:<a href="#cite-progit">here</a>@@
+#+NAME: fig:git-basics_areas
+[[../pictures/git-basics_lifecycle.png]]
+
+** Checking file status in =git= repository
+
+The main command to find out status of all the files in your repository, that means whether they are /untracked/, /modified/, /staged/, or in-sync with git repository snapshot; as defined [[target:gitFileStates][above]].
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git status
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+Output message of this command should inform you which branch you are using, about its state compared to the /default branch/ and about state of files in repository -- whether there are any /staged/, or /modified/ files that can be staged or /untracked/ files that are not managed by =git=.
+
+There is also short form of the =git= status report, that is invoked with command =git status --short= or =git status -s= that outputs abbreviated information about your =git= repository. In front of every file name is status identifier for staging area and current worktree. These identifiers have following meaning:
+
+- =??= : signals that file is not tracked by =git=, therefore its state is unknown to =git=
+- =A= : means tht file was added to the staging area
+- =M= : file was modified
+
+For example, identifier =MM= means that file was modified, staged and then modified again before committing previous changes.
+
+** Adding files to =git= tracking
+
+In order to begin tracking new file you have to /add/ it to =git= tracking list via =git add= command. For example, if you want t start tracking file =test.org=, you would issue following command in terminal:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git add test.org
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+If you run =git status= command again in the repository, you get information about new file being added to =git= tracking in output, section "Changes to be committed." If you specify directory name to =git add= command all the files in thee directory are added recursively to =git= tracking.
+
+** Staging and committing modified files in =git=
+
+Modify a file that is already tracked by =git= and check output of =git status= command output:
+
+%%Nejlepší by bylo zde dát příklad.%%
+
+=git= informs you that there is a modified file that is not staged for commit. Lets remedy that by putting it into staging area with command =git add=. As was stated already, =git add= command has multiple use cases. All of them lead to adding file in its current state to =git= staging area. If the file is /untracked/, after commit is part of next and following project snapshots, until removed. If /added/ file is already /tracked/, =git= puts its contents again into staging area for next commit.
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git add test.org
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+After adding file to the next future repository snapshot you have to create that snapshot with =git commit= command.
+
+** Setting ignored files to =git=
+
+It might happen that you dont want to have some type of files tracked by =git=, for example some log files or files that are created during your build process and are not part of the final release. When we get to talking about {{{latex}}}, you will notice that {{{latex}}} generates pretty big number of build files that are needed to create resulting pdf, but other than that they have not use. For this occasion there is =.gitignore= file.
+
+Basic {{{latex}}} project example =.gitignore= file could look like this:
+
+#+BEGIN_EXAMPLE
+*.aux
+#+END_EXAMPLE
+
+=.gitignore= file understands basic shell syntax, so in this example makes =git= ignore all files with the =.aux= extension.
+
+You can also ignore full directories. In that case you simply write name of the directory ended with slash =/=:
+
+#+BEGIN_EXAMPLE
+dirname/
+#+END_EXAMPLE
+
+
+
+%%Záložka: progit str. 31%%
+
+** File operations in =git= repository
+
+** Disclaimer
+
+This chapter was written with heavy support of Pro Git book, see @@latex:\cite{progit}@@ @@html:<a href="#cite-progit">here</a>@@
+
+#+HTML: <h2>References</h2>
+#+HTML:
+#+HTML: <p> <a id="cite-progit">[1] </a> Progit Book, accessible paperback or free online at: <a href="https://git-scm.com/book/en/v2">https://git-scm.com/book/en/v2</a> </p>

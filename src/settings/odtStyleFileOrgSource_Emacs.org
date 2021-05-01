@@ -1,0 +1,24 @@
+* First level header
+
+** Second level header
+
+*** Third level header
+
+- list item 1
+- list item 2
+- list item 3
+
+Regular text test.
+
+Text with more than one paragraph and hopefully more than one row ...Text with more than one paragraph and hopefully more than one row ...Text with more than one paragraph and hopefully more than one row ...Text with more than one paragraph and hopefully more than one row ...Text with more than one paragraph and hopefully more than one row ...Text with more than one paragraph and hopefully more than one row ...
+
+=example of verbatim text=
+
+~example of code text~
+
+1. ordered list item 1
+2. ordered list item 2
+3. ordered list item 3
+
+!!Test of MyHighightImportant style!!
+%%Test of MyHighlightWarning style%%

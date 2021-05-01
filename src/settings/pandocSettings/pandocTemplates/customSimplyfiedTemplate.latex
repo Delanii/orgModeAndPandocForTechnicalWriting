@@ -1,0 +1,949 @@
+% !TEX encoding = UTF-8 Unicode
+
+$-- !!! ÚVODNÍ SLOVO !!!
+$-- Toto je zjednodušená šablona proti standardní šabloně `pandoc`u. V prvé řadě v ní bylo zrušeno hodně proměnných a spoustu nastavení bylo provedeno "na tvrdo." V tomto ohledu nebyl příliš upraven `beamer`, protože jsem jej zatí moc nepoužíval. Proto, například, pro zobrazení bibliografie v `beamer` u je třeba stále použít proměnnou `biblatex`, nastavit titul pomocí `biblio-title` a podobně.
+$-- Tyto nedostatky je řeba postupem času vychytat - buď zavést pevná nastavení i pro `beamer`, nebo namísto některých pevných nastavení (například těch právě pro `biblatex`, který v `beamer`u, zdá se, potřebuje pár specifických nastavení) navrátit proměnné zpět do LaTeXové šablony na vhodná místa.
+$-- Proměnnou `biblatex` jsem vrátil zpět. Bude to asi lepší.
+
+%--------------------------------------------------------
+% NASTAVENÍ TYPU DOKUMENTU
+%--------------------------------------------------------
+
+\documentclass[%
+$if(fontsize)$
+  $fontsize$,
+$endif$
+$-- %
+$if(lang)$
+  $babel-lang$,
+$endif$
+$-- %
+$if(papersize)$
+  $papersize$paper,
+$endif$
+$-- %
+$if(beamer)$
+  ignorenonframetext,
+  $if(handout)$
+    handout,
+  $endif$
+  $if(aspectratio)$
+    aspectratio=$aspectratio$,
+  $endif$
+$endif$
+$-- %
+$for(classoption)$
+  $classoption$$sep$,
+$endfor$
+]{$documentclass$}
+
+%-----------------------------------------------------------------------------------------------
+%	POMOCNÉ BALÍČKY
+%-----------------------------------------------------------------------------------------------
+
+\usepackage{ifxetex}
+\usepackage{ifluatex}
+\usepackage{comment}
+\usepackage{mwe}			%pro vkládání placeholder-obrázků
+\usepackage{import}
+\usepackage{ifplatform}
+
+%--------------------------------------------------------
+% NASTAVENÍ JAZYKA
+%--------------------------------------------------------
+
+$if(lang)$
+  \ifxetex
+    % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
+    \usepackage{polyglossia}
+    \setmainlanguage[$for(polyglossia-lang.options)$$polyglossia-lang.options$$sep$,$endfor$]{$polyglossia-lang.name$}
+    $for(polyglossia-otherlangs)$
+      \setotherlanguage[$for(polyglossia-otherlangs.options)$$polyglossia-otherlangs.options$$sep$,$endfor$]{$polyglossia-otherlangs.name$}
+    $endfor$
+  \else
+    \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
+  $if(babel-newcommands)$
+    $babel-newcommands$
+  $endif$
+  \fi
+$endif$
+
+%--------------------------------------------------------
+% NASTAVENÍ LAYOUTU STRÁNKY, RESP. SLIDU PREZENTACE
+%--------------------------------------------------------
+
+$if(geometry)$
+  $if(beamer)$
+    \geometry{$for(geometry)$$geometry$$sep$,$endfor$}
+  $else$
+    \usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
+	\linespread{1.0}
+  $endif$
+$endif$
+
+%--------------------------------------------------------
+% NASTAVENÍ PRO BEAMER
+%--------------------------------------------------------
+
+$if(beamer)$
+  $if(background-image)$
+    \usebackgroundtemplate{%
+      \includegraphics[width=\paperwidth]{$background-image$}%
+    }
+  $endif$
+  \usepackage{pgfpages}
+  \setbeamertemplate{caption}[numbered]
+  \setbeamertemplate{caption label separator}{: }
+  \setbeamercolor{caption name}{fg=normal text.fg}
+  \beamertemplatenavigationsymbols$if(navigation)$$navigation$$else$empty$endif$
+  $for(beameroption)$
+    \setbeameroption{$beameroption$}
+  $endfor$
+%  Prevent slide breaks in the middle of a paragraph
+  \widowpenalties 1 10000
+  \raggedbottom
+  $if(section-titles)$
+    \setbeamertemplate{part page}{
+      \centering
+      \begin{beamercolorbox}[sep=16pt,center]{part title}
+        \usebeamerfont{part title}\insertpart\par
+      \end{beamercolorbox}
+    }
+    \setbeamertemplate{section page}{
+      \centering
+      \begin{beamercolorbox}[sep=12pt,center]{part title}
+        \usebeamerfont{section title}\insertsection\par
+      \end{beamercolorbox}
+    }
+    \setbeamertemplate{subsection page}{
+      \centering
+        \begin{beamercolorbox}[sep=8pt,center]{part title}
+          \usebeamerfont{subsection title}\insertsubsection\par
+        \end{beamercolorbox}
+    }
+    \AtBeginPart{
+      \frame{\partpage}
+    }
+    \AtBeginSection{
+      \ifbibliography
+      \else
+        \frame{\sectionpage}
+      \fi
+    }
+    \AtBeginSubsection{
+      \frame{\subsectionpage}
+    }
+  $endif$
+$endif$
+
+$-- %
+
+$if(beamerarticle)$
+  \usepackage{beamerarticle} % needs to be loaded first
+$endif$
+
+$-- %
+
+%-----------------------------------------------------------------------------------------------
+%	NASTAVENÍ GRAFICKÝCH OBJEKTŮ A MINTED
+%-----------------------------------------------------------------------------------------------
+
+\usepackage{graphicx}%pro vkládání obrázků do dokumentu
+\graphicspath{{./src/pictures}}%určení složky, z které jsou obrázky načítány. "." znamená cestu až do složky s dokumentem, následuje název složky s obrázky; lze stanovit i více složek deklarováním více skupin, delimitovaných složenými závorkami
+
+\usepackage[dvipsnames,x11names,svgnames,table]{xcolor}
+\usepackage{luacolor}
+
+$if(beamer)$
+$else$
+  \usepackage{tikz}
+$endif$
+
+\usepackage[most, minted]{tcolorbox}
+
+ \tcbset{listing engine=minted}
+
+ \usemintedstyle{cl}
+ \setminted{
+ linenos=true,%
+ breaklines=true,%
+ breakanywhere,%
+ numbersep=12pt,%
+ xleftmargin=9pt%
+ }
+
+ \renewcommand{\theFancyVerbLine}{
+ \textcolor[rgb]{0.4,0,1}{\scriptsize\arabic{FancyVerbLine}}}
+ \makeatletter
+ % add tcblistings to \jobname.lol (list of listings)
+ \tcbset{
+ addtolol/.style={list entry={\kvtcb@title},add to list={lol}{subsection}},
+ }
+ \makeatother
+
+ \tcbset{every box/.style={enhanced,%
+ breakable,%
+ }
+ }
+
+ \tcbset{mylistingbox/.style 2 args={% Zakomentované řádky fungují, avšak byly vypnuty pro zjednodušení čtení souboru - jakékoli PC snažící se načíst tenhle soubor to nedává ...
+ addtolol,
+ colback=#1!10,%
+ interior style={left color=#1!10,
+   right color=#2!10},
+ colframe=#1!75!black,%
+%	borderline={0.5pt}{-2pt}{#1},
+%	drop fuzzy shadow,
+ fonttitle=\bfseries,
+ overlay={\begin{tcbclipinterior}\fill[red!10!blue!10!white] (frame.south west)
+   rectangle ([xshift=7mm]frame.north west);\end{tcbclipinterior}},%
+ watermark tikz app on=broken is {\node[draw, circle, line width=0.2mm, align=center] {\hspace{5pt}{\Roman{tcbbreakpart}}\hspace{5pt}};},
+ watermark zoom=0.25,
+%	finish raised fading vignette={size=3mm},
+ }
+ }
+
+ \newcounter{elispcounter}
+ \newcounter{bashcounter}
+
+ \NewTCBListing[use counter=elispcounter]{elisplistingbox}{ !O{Emacs~lisp~listing~\theelispcounter}}{
+ mylistingbox={purple}{Aquamarine},%style
+ %	addtolol,%
+ minted language=elisp,
+ listing only,%
+ center lower,%
+ title=#1,
+ after title={\hfill\colorbox{black}{\bfseries \textcolor{white}{Elisp}}},
+ underlay middle and last={%
+ \ifnumequal{\numexpr\tcbsegmentstate}{2}{\begin{tcbclipinterior}\fill[red!10!blue!10!white] ([xshift=-7mm]frame.south east)
+   rectangle (frame.north east) node [anchor=south east,rotate=90] {\bfseries \textcolor{black}{#1 -- Output}};\end{tcbclipinterior}%
+ }
+ {\begin{tcbclipinterior}\fill[red!10!blue!10!white] ([xshift=-7mm]frame.south east)
+   rectangle (frame.north east) node [anchor=south east,rotate=90] {\bfseries \textcolor{black}{#1}};\end{tcbclipinterior}%
+}
+},%
+}
+
+ \NewTCBListing[use counter=bashcounter]{bashlistingbox}{ !O{Bash~shell~listing~\thebashcounter}}{
+ mylistingbox={Gray}{Fuchsia},%style
+ %	addtolol,%
+ minted language=elisp,
+ listing only,%
+ center lower,%
+ title=#1,
+ after title={\hfill\colorbox{black}{\bfseries \textcolor{white}{bash}}},
+ underlay middle and last={%
+ \ifnumequal{\numexpr\tcbsegmentstate}{2}{\begin{tcbclipinterior}\fill[red!10!blue!10!white] ([xshift=-7mm]frame.south east)
+   rectangle (frame.north east) node [anchor=south east,rotate=90] {\bfseries \textcolor{black}{#1 -- Output}};\end{tcbclipinterior}%
+ }
+ {\begin{tcbclipinterior}\fill[red!10!blue!10!white] ([xshift=-7mm]frame.south east)
+   rectangle (frame.north east) node [anchor=south east,rotate=90] {\bfseries \textcolor{black}{#1}};\end{tcbclipinterior}%
+}
+},%
+}
+
+%-----------------------------------------------------------------------------------------------
+%	PSANÍ MATEMATIKY
+%-----------------------------------------------------------------------------------------------
+
+\usepackage{MnSymbol}
+\usepackage{amsmath}
+\usepackage{mathtools}
+
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[$if(fontenc)$$fontenc$$else$T1$endif$]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+$if(mathspec)$
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{unicode-math}
+  \fi
+$else$
+  \usepackage{unicode-math}
+$endif$
+\fi
+
+$-- %
+
+%--------------------------------------------------------
+% NASTAVENÍ FONTŮ
+%--------------------------------------------------------
+
+$if(monofont)$
+  \ifluatex
+    \usepackage[no-math]{fontspec}%Umožní použití jiného monospaced-fontu v kombinaci s matematickými symboly definovanými v MnSymbol
+  \else
+  \fi
+$else$
+\ifluatex
+  \usepackage{fontspec}
+
+  %\setmainfont{Times New Roman}
+  %\setmainfont{Calibri}
+\else
+\fi
+$endif$
+
+$-- %
+
+$if(mainfont)$
+  \setmainfont[$for(mainfontoptions)$$mainfontoptions$$sep$,$endfor$]{$mainfont$}
+$endif$
+
+$-- %
+
+$if(sansfont)$
+  \setsansfont[$for(sansfontoptions)$$sansfontoptions$$sep$,$endfor$]{$sansfont$}
+$endif$
+
+$-- %
+
+$if(monofont)$
+  \setmonofont[$for(monofontoptions)$$monofontoptions$$sep$,$endfor$]{$monofont$}
+  %\setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
+$endif$
+
+$-- %
+
+$for(fontfamilies)$
+  \newfontfamily{$fontfamilies.name$}[$for(fontfamilies.options)$$fontfamilies.options$$sep$,$endfor$]{$fontfamilies.font$}
+$endfor$
+
+$-- %
+
+$if(mathfont)$
+  $if(mathspec)$
+    \ifxetex
+      \setmathfont(Digits,Latin,Greek)[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+    \else
+      \setmathfont[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+    \fi
+  $else$
+    \setmathfont[$for(mathfontoptions)$$mathfontoptions$$sep$,$endfor$]{$mathfont$}
+  $endif$
+$endif$
+
+$-- %
+
+%--------------------------------------------------------
+% NASTAVENÍ TITULNÍ STRANY
+%--------------------------------------------------------
+
+$if(title)$
+  \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$endif$
+
+$-- %
+
+$if(subtitle)$
+  $if(beamer)$
+  $else$
+    \usepackage{etoolbox}
+    \makeatletter
+      \providecommand{\subtitle}[1]{% add subtitle to \maketitle
+        \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+      }
+    \makeatother
+  $endif$
+  \subtitle{$subtitle$}
+$endif$
+
+$-- %
+
+\author{$for(author)$$author$$sep$ \and $endfor$}
+\date{$date$}
+$if(beamer)$
+  $if(institute)$
+    \institute{$for(institute)$$institute$$sep$ \and $endfor$}
+  $endif$
+  $if(titlegraphic)$
+    \titlegraphic{\includegraphics{$titlegraphic$}}
+  $endif$
+  $if(logo)$
+    \logo{\includegraphics{$logo$}}
+  $endif$
+$endif$
+
+%--------------------------------------------------------
+% NASTAVENÍ NADPISŮ
+%--------------------------------------------------------
+
+\makeatletter
+\@ifundefined{KOMAClassName}{%TRUE - pokud nejde o KOMA-class
+  % Něco časem vznikne
+}{%FALSE - je použita KOMA script class
+  \addtokomafont{disposition}{\rmfamily}% změna nadpisů na latin roman font
+  \addtokomafont{title}{\normalfont}
+  \addtokomafont{pageheadfoot}{\normalfont}
+}
+\makeatother
+
+%Ponechání číslování kapitol, ale vypnutí objevování slova ``kapitola'', viz. https://tex.stackexchange.com/questions/62516/how-to-suppress-chapter-in-chapter-while-keeping-numbering
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace*{50\p@}%                                 % Insert 50pt (vertical) space
+  {\parindent \z@ \raggedright \normalfont         % No paragraph indent, ragged right
+    \ifnum \c@secnumdepth >\m@ne                   % If you should number chapters
+      \if@mainmatter                               % ... and you're in \mainmatter
+%        \huge\bfseries \@chapapp\space \thechapter % huge, bold, Chapter + number
+	\Huge\bfseries \thechapter.\space%
+%        \par\nobreak                               % paragraph break without page break
+%        \vskip 20\p@                               % Insert 20pt (vertical) space
+      \fi
+    \fi
+    \interlinepenalty\@M                           % Penalty
+    \Huge \bfseries #1\par\nobreak                 % Huge, bold chapter title
+    \vskip 40\p@                                   % Insert 40pt (vertical) space
+  }}
+\makeatother
+
+% Toto přesně nevím, co dělá, tak to raději ponechám
+
+$if(beamer)$
+$else$
+  $if(block-headings)$
+% Make \paragraph and \subparagraph free-standing
+    \ifx\paragraph\undefined\else
+      \let\oldparagraph\paragraph
+      \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+    \fi
+    \ifx\subparagraph\undefined\else
+      \let\oldsubparagraph\subparagraph
+      \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+    \fi
+  $endif$
+$endif$
+
+%--------------------------------------------------------
+% NASTAVENÍ OBSAHU
+%--------------------------------------------------------
+
+\setcounter{secnumdepth}{4}
+
+\makeatletter
+\@ifundefined{KOMAClassName}{%TRUE - pokud nejde o KOMA-class
+  %
+}{%FALSE - je použita KOMA script class
+  \KOMAoptions{
+    listof=totoc,
+    listof=entryprefix,
+  }
+
+  \DeclareTOCStyleEntries[dynnumwidth=true]{default}{part,chapter,section,subsection,subsubsection}
+}
+\makeatother
+
+%------------------------------------------
+%	NASTAVENÍ ZÁHLAVÍ
+%------------------------------------------
+
+\makeatletter
+\@ifundefined{KOMAClassName}{%TRUE - pokud nejde o KOMA-class
+  % Něco časem vznikne
+}{%FALSE - je použita KOMA script class
+  \usepackage{scrlayer-scrpage}
+}
+\makeatother
+
+\makeatletter
+\@ifundefined{KOMAClassName}{%TRUE - pokud nejde o KOMA-class
+  % Něco časem vznikne
+}{%FALSE - je použita KOMA script class
+  \lehead[]{\headmark}
+  \cehead[]{}
+  \rehead[]{}
+  \lohead[]{}
+  \cohead[]{}
+  \rohead[]{\headmark}
+}
+\makeatother
+
+%------------------------------------------
+%	NASTAVENÍ ZÁPATÍ
+%------------------------------------------
+
+\makeatletter
+\@ifundefined{KOMAClassName}{%TRUE - pokud nejde o KOMA-class
+  % Něco časem vznikne
+}{%FALSE - je použita KOMA script class
+  \lefoot[]{}
+  \cefoot[]{\pagemark}
+  \refoot[]{}
+  \lofoot[]{}
+  \cofoot[]{\pagemark}
+  \rofoot[]{}
+}
+\makeatother
+
+%--------------------------------------------------------
+% NASTAVENÍ PRO BEAMER
+%--------------------------------------------------------
+
+$if(beamer)$
+  $if(theme)$
+    \usetheme[$for(themeoptions)$$themeoptions$$sep$,$endfor$]{$theme$}
+  $endif$
+  $if(colortheme)$
+    \usecolortheme{$colortheme$}
+  $endif$
+  $if(fonttheme)$
+    \usefonttheme{$fonttheme$}
+  $endif$
+  $if(mainfont)$
+    \usefonttheme{serif} % use mainfont rather than sansfont for slide text
+  $endif$
+  $if(innertheme)$
+    \useinnertheme{$innertheme$}
+  $endif$
+  $if(outertheme)$
+    \useoutertheme{$outertheme$}
+  $endif$
+$endif$
+$-- %
+
+%--------------------------------------------------------
+% NASTAVENÍ TYPOGRAFIE
+%--------------------------------------------------------
+
+% Use upquote if available, for straight quotes in verbatim environments
+\usepackage{upquote}
+\usepackage{csquotes}
+
+\usepackage[$for(microtypeoptions)$$microtypeoptions$$sep$,$endfor$]{microtype}
+%\DeclareMicrotypeAlias{lmss}{cmr} % snad to funguje, jak chci
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\DisableLigatures{encoding = *, family = * }
+
+% NASTAVENÍ INDENTACE ODSTAVCŮ
+
+\usepackage[skip=0.2\baselineskip plus 2pt\relax,%
+parfill%
+]{parskip}
+
+$if(beamer)$
+$else$
+  \clubpenalty=500\relax % Zamezuje sirotkům (osamocenému jedinému řádku na konci stránky) Původní hodnota je 150; dovolené hodnoty jsou od -1 (tj. preferované chování) do 10000 (nekonečně zakázané). 500 by mělo být relativně dost.
+  \widowpenalty=500\relax % Zamezuje osamocenému řádku na začátku stránky
+$endif$
+
+\ifluatex
+  \usepackage[hyphenation,%
+  %draft,% Zapíná zvýrazňování typografických nedostatků
+  parindent,%
+  lastparline,%
+  nosingleletter,%
+  homeoarchy,%
+  rivers%
+  ]{impnattypo}
+
+  \usepackage{lua-ul}
+\else
+\fi
+
+\ifluatex{%TRUE
+%------------------------------------------
+%	PEVNÁ MEZERA A DALŠÍ LUACODE
+%------------------------------------------
+
+  \usepackage{luacode}
+
+$-- % Vygenerování souboru s procedurou pro pevnou mezeru
+
+  \begin{filecontents*}{pevnaMezera.lua}
+  function pevnaMezera(s)
+    s = string.gsub(s, "( [aikosuvzAIKOSUVZ])( )([aikosuvzAIKOSUVZ])( )", "%1~%3~")--např. " a i ", " i v ", atd ...
+    s = string.gsub(s, "( [aikosuvzAIKOSUVZ])( )", "%1~")
+    s = string.gsub(s, " že ", " že~")
+    s = string.gsub(s, " – ", "~– ")
+    s = string.gsub(s, "( %()str%. ", "%1str.~")--vyhledává buď " str. " nebo "(str. "
+    s = string.gsub(s, " tzv%. ", " tzv.~")
+    s = string.gsub(s, "( [aikosuvzAIKOSUVZ])([ ~])(tzv%.)( )", "%1~%3~")
+    s = string.gsub(s, "( %()viz%. ", "%1viz.~")--vyhledává buď " viz. " nebo "(viz. ", ale taky "{ viz. ", které se objevuje speciálně v referenci na kritéria, která je psaná italikou, z nějakého důvodu %{ nefunguje ...
+--    s = string.gsub(s, " (%d)", "~%1")--testuje i na přítomnost tečky za číslicí.
+--    s = string.gsub(s, " (%d%d)", "~%1")--testuje i na přítomnost tečky za číslicí.
+  return s
+end
+\end{filecontents*}
+
+  \begin{filecontents*}{luacode.tex}
+  \directlua{dofile("pevnaMezera.lua")}
+
+  \begin{luacode}
+  function startcallback()
+    luatexbase.add_to_callback("process_input_buffer", pevnaMezera , "pevnaMezera" )
+  end
+
+  function stopcallback()
+    luatexbase.remove_from_callback("process_input_buffer", "pevnaMezera" )
+  end
+  \end{luacode}
+
+  \newenvironment{stopcallback}{\directlua{stopcallback()}}{\directlua{startcallback()}}
+
+  \AtBeginDocument{%
+    \directlua{luatexbase.add_to_callback(
+      "process_input_buffer", pevnaMezera , "pevnaMezera" )}}
+\end{filecontents*}
+
+  \IfFileExists{pevnaMezera.lua}{% TRUE - pevnaMezera.lua se zepsala
+    \IfFileExists{luacode.tex}{% TRUE - existuje i luacode.tex, vše je OK, načti luacode.tex
+      \import{.}{luacode.tex}}{% FALSE - opět z toho nic nebude
+      \relax}
+    }{%FALSE - nezapsala se pevnaMezera.lua ; nic z toho nebude
+    \relax}
+}{%ifluatex - FALSE; bez luaTeXu nelze používat luacode
+\relax}
+
+$-- %
+
+%--------------------------------------------------------
+% NASTAVENÍ VERBATIM
+%--------------------------------------------------------
+
+%	ÚPRAVA INLINE KÓDU
+
+\usepackage{fancyvrb}
+\usepackage{fvextra}
+
+\fvinlineset{breaklines,%
+   breakafter=\space ,
+   breakanywhere
+}
+
+\tcbset{listing engine=minted, before={\par\parindent=0pt}}% Z původní definice before={\par\pagebreak[0]\parindent=0pt} bylo nutné odebrat \pagebreak, aby bylo možné používat tcolorbox uvnitř longtable. Longtable totiž redefinuje \pagebreak tak, že v některých případech to tcolorbox rozbíjí (přichází chyba o chybějícím alignmentu)
+
+% Nastavení minted
+
+\usemintedstyle{colorful}
+\setminted{
+	linenos=true,%
+	breaklines=true,%
+	breakanywhere,%
+	numbersep=12pt,%
+	xleftmargin=9pt%
+}
+
+\usepackage{xurl}% add URL line breaks if available
+
+$-- %	NASTAVENÍ PRO LITERATE HASKELL - toto upravit pro tcbnewlisting a použití minted
+
+$if(lhs)$
+$--  \lstnewenvironment{code}{\lstset{language=Haskell,basicstyle=\small\ttfamily}}{}
+
+% Převedení na minted:
+
+  \newenvironment{code}%
+    {\begin{minted}{haskell}}
+    {\end{minted}}
+$endif$
+
+$-- %
+
+$if(highlighting-macros)$
+  $highlighting-macros$
+$endif$
+
+$-- %
+
+%--------------------------------------------------------
+% NASTAVENÍ LIVE KÓDU - PYTHONTEX
+%--------------------------------------------------------
+
+\usepackage[usefamily={py,sympy,pylab}]{pythontex}
+
+\IfFileExists{pycode.tex}{%TRUE - je využíván extenrí kód pythonu nebo jiného podporovaného programovacího jazyka
+  \import{.}{pycode.tex}}{%FALSE
+  \relax}
+
+%------------------------------------------
+%	PSANÍ TABULEK
+%------------------------------------------
+
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+\newcounter{tblerows}
+\expandafter\let\csname c@tblerows\endcsname\rownum%Pro fungování počítání řádků v tabularx, v tabular by mělo fungovat
+
+\usepackage{longtable}
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.3}
+
+$if(beamer)$
+  \usepackage{caption}
+  % Make caption package work with longtable
+  \makeatletter
+    \def\fnum@table{\tablename~\thetable}
+  \makeatother
+$else$
+$endif$
+
+%------------------------------------------
+%	PSANÍ SEZNAMŮ
+%------------------------------------------
+
+\usepackage{enumitem}
+\setenumerate[0]{label=\arabic*.,ref=\arabic*, noitemsep}%úprava všech číslování na 1., ale referencí na kritéria jen na 1
+\setitemize{noitemsep}
+
+% Otestovat, co se stane, když toto zruším
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+%------------------------------------------
+%	VYTVÁŘENÍ KOLEKCÍ DAT
+%------------------------------------------
+
+\usepackage{datatool}
+\usepackage{scontents}
+
+\setupsc{overwrite={true}}
+
+%------------------------------------------
+%	PSANÍ CITACÍ
+%------------------------------------------
+
+$if(biblatex)$
+  $if(beamer)$
+    \newif\ifbibliography
+    \usepackage[style=numeric,$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
+  $else$
+    \usepackage[style=numeric, backend=biber, refsegment=chapter, defernumbers=true, mincrossrefs=1, backref=true, backrefstyle=three, sorting=none, $for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
+  $endif$
+
+  \IfFileExists{citace.tex}{%TRUE
+    \import{.}{citace.tex}
+    \addbibresource{citace.bib}}{%FALSE
+    \relax}
+
+  $if(bibliography)$
+    $for(bibliography)$
+      \addbibresource{$bibliography$}
+    $endfor$
+  $endif$
+$endif$
+
+%------------------------------------------
+%	PSANÍ PŘÍLOHY
+%------------------------------------------
+
+$if(beamer)$
+$else$
+  \usepackage[toc,page]{appendix}		%vkládání apendixu (příloh) do dokumentu
+$endif$
+
+\usepackage{pdfpages}
+
+%------------------------------------------
+%	NAČTENÍ DALŠÍ PREAMBLE
+%------------------------------------------
+
+\IfFileExists{./preamble/pramble.tex}{%TRUE
+  \import{./preamble}{preamble.tex}}{
+  \relax}
+
+%------------------------------------------
+%	NASTAVENÍ, U KTERÝCH SI NEJSEM JIST, CO DĚLAJÍ
+%------------------------------------------
+
+$for(header-includes)$
+  $header-includes$
+$endfor$
+
+%------------------------------------------
+%	TVORBA HYPERTEXTOVÝCH ODKAZŮ
+%------------------------------------------
+
+\usepackage{varioref}
+
+\usepackage[pdfencoding=auto]{hyperref}
+%Díky tomuto hyperref funguje, ale nevím proč. Viz: https://tex.stackexchange.com/questions/371955/hyperref-error-argument-of-hysetreflink-has-an-extra
+\hypersetup{
+  hidelinks,%
+  linktoc=all,%
+  hypertexnames=true,%
+  pdfcreator={LaTeX via pandoc}%
+}
+
+\AtBeginDocument{
+  \label{CorrectFirstPageLabel}
+  \def\fpage{\pageref{CorrectFirstPageLabel}}
+}
+
+\urlstyle{same} % disable monospaced font for URLs
+\VerbatimFootnotes % allow verbatim text in footnotes
+
+\usepackage{bookmark}
+\bookmarksetup{
+  open,
+%  depth=8,
+  openlevel=0,
+  numbered,
+}
+
+\usepackage{cleveref}
+
+%------------------------------------------
+%	ÚPRAVA NÁZVU PŘÍLOHY
+%------------------------------------------
+
+%nutné po hyperrrefu
+
+$if(beamer)$
+$else$
+  \renewcommand{\appendixtocname}{Přílohy}%Přejmenování appendixu
+  \renewcommand{\appendixpagename}{Přílohy}
+$endif$
+
+% Navzdory dokumentaci je třeba v tomto případě attachfile loadnout až po hyperref. Důvodem je, že attachfile sám načítá hyperref bez options. Pokud hyperref má options (v mém případě ``pdfencoding = auto,''), tak TeX hlásí ``option clash'' error.
+
+\usepackage{attachfile}
+
+$-- %
+
+%------------------------------------------
+%	SEZNAM ZKRATEK, POJMŮ, INDEX
+%------------------------------------------
+
+\usepackage[record, nopostdot, abbreviations,% create "abbreviations" glossary
+ 		index,%
+                    nostyles, stylemods={all},% do the adjustments for the longbooktabs styles
+                    ]{glossaries-extra}
+
+%\makeglossaries
+
+\setglossarystyle{long-booktabs}
+\setabbreviationstyle[acronym]{long-short-user}
+
+\AtBeginDocument{%
+\GlsXtrLoadResources[selection={all},%
+			src={src/settings/tertiaryEntries},%
+			type={index},
+ 			label-prefix={idx.},
+  			dual-prefix={},
+  			cs-label-prefix={},
+ 			sort={en},
+  			sort-field={name},
+  			dual-sort={en},
+  			charset=UTF-8,%
+ 			combine-dual-locations={primary},
+ 			cs-label-prefix={},
+			]}
+
+% provide commands that work like \gls etc for the @index entries
+% (that don't have a dual counterpart)
+\glsxtrnewglslike{idx.}{\idx}{\idxpl}{\Idx}{\Idxpl}
+
+%------------------------------------------
+%	PSANÍ DOKUMENTU
+%------------------------------------------
+
+\begin{document}
+
+\frenchspacing
+
+$-- % Vysvětlení: Pro beamer je vykreslen frame s titulkou, pro ostatní: Pokud obsahují abstrakt (article, scrartcl), tak je titulní stránka číslovaná, jinak nikoli.
+$if(has-frontmatter)$
+  \frontmatter
+$endif$
+
+$-- %
+
+$if(title)$
+  $if(beamer)$
+    \frame{\titlepage}
+  $else$
+    \maketitle
+    $if(abstract)$
+      \begin{abstract}
+        $abstract$
+      \end{abstract}
+	$else$
+	  \thispagestyle{empty}
+	$endif$
+  $endif$
+$endif$
+
+$-- %
+
+$for(include-before)$
+  $include-before$
+$endfor$
+
+$-- %
+
+$if(toc)$
+  $if(toc-title)$
+    \renewcommand*\contentsname{$toc-title$}
+  $endif$
+  $if(beamer)$
+    \begin{frame}[allowframebreaks]
+      $if(toc-title)$
+        \frametitle{$toc-title$}
+      $endif$
+      \tableofcontents[hideallsubsections]
+    \end{frame}
+  $else$
+    {
+      \tableofcontents
+	  \addtocontents{toc}{\protect\thispagestyle{empty}}
+    }
+  $endif$
+$endif$
+
+$-- %
+
+$if(lot)$
+  \listoftables
+  \addtocounter{table}{-1} %seznam zkratek je také počítán jako tabulka, avšak v seznamu jej přičítat nechci. Protože je v pořadí první tabulkou, stačí k počítadlu tabulek přidat -1
+  \addtocontents{lot}{\protect\thispagestyle{empty}}
+$endif$
+
+$-- %
+
+$if(lof)$
+  \listoffigures
+  \addtocontents{lof}{\protect\thispagestyle{empty}}
+$endif$
+
+$-- %
+
+\pagestyle{scrheadings}
+
+$if(has-frontmatter)$
+  \mainmatter
+$endif$
+
+$-- %
+
+$body$
+
+$-- %
+
+$if(has-frontmatter)$
+  \backmatter
+$endif$
+
+$-- %
+
+$if(biblatex)$
+  $if(beamer)$
+    \begin{frame}[allowframebreaks]{$biblio-title$}
+      \bibliographytrue
+      \printbibliography[heading=none]
+    \end{frame}
+  $else$
+    \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+  $endif$
+$endif$
+
+$-- %
+
+$for(include-after)$
+  $include-after$
+$endfor$
+\end{document}

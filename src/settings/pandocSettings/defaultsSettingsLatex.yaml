@@ -1,0 +1,46 @@
+from: org+smart
+to: latex
+
+# Soubory vkládané do kompilace
+
+input-files:
+- settings/orgMacroDefinitions.org
+- ./main.org
+
+# Stanovení šablony pro LaTeX writer
+
+template: ./settings/pandocSettings/pandocTemplates/customSimplyfiedTemplate.latex
+
+# Vybrání filterů
+
+filters:
+- ./settings/pandocSettings/pandocFilters/pandocVlna.lua
+- pandoc-acronyms
+
+# Nastavení obsahu a nadpisů
+
+top-level-division: chapter
+number-sections: true
+
+table-of-contents: true
+cite-method: biblatex
+
+# Doplňková nastavení zápisu dokumentu
+
+wrap: none
+
+strip-comments: false
+strip-empty-paragraphs: true
+
+metadata-files:
+- ./settings/pandocSettings/mainDefaultsPandoc.yaml
+- ./settings/pandocSettings/specificMetadataLatex.yaml
+
+log-file: pandocLatexLog.log
+
+pdf-engine: lualatex
+pdf-engine-opts:
+- "--shell-escape"
+- "--synctex=1"
+
+dpi: 1200

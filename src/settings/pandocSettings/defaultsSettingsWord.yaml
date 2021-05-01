@@ -1,0 +1,36 @@
+from: org+smart
+
+# Soubory vkládané do kompilace
+
+input-files:
+- settings/orgMacroDefinitions.org
+- ./main.org
+
+# Stanovení šablony pro LaTeX writer
+
+reference-doc: ./settings/pandocSettings/pandocTemplates/modifiedReferenceDoc.docx
+
+# Vybrání filterů
+
+filters:
+- ./settings/pandocSettings/pandocFilters/pandocVlna.lua
+- pandoc-acronyms
+
+# Nastavení obsahu a nadpisů
+
+top-level-division: chapter
+number-sections: true
+
+table-of-contents: true
+
+# Doplňková nastavení zápisu dokumentu
+
+wrap: none
+
+strip-comments: false
+strip-empty-paragraphs: true
+
+metadata-files:
+- ./settings/pandocSettings/mainDefaultsPandoc.yaml
+
+log-file: pandocDOCXLog.log

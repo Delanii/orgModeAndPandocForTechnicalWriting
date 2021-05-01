@@ -1,0 +1,42 @@
+# Ignore everything that is in =clean= makefile rule, because that is not needed at all ...
+#
+*.log
+*.tex
+*.gz
+*.out
+*.aux
+*.toc
+*.lot
+*.lof
+*.lol
+*.pyg
+*.listing
+*.bcf
+*.glg*
+*.glo*
+*.gls*
+*.ist
+*.run.xml
+*.bbl
+*.blg
+*.synctex
+*.tuc
+*.pytxcode
+_minted-main/
+_minted-orgModeAndPandocForTechnicalWriting_pandocExport/
+.auctex-auto/
+
+# Ignore "resources" folder, since there are some notes not fit for version control
+#
+resources/
+
+# Ignore todos and its archive, since again there are notes not worth version tracking
+#
+TODOs.org
+TODOs_archive.org
+
+# Ignore temporary files of other kinds
+#
+thumbs.db
+*.tmp
+*~

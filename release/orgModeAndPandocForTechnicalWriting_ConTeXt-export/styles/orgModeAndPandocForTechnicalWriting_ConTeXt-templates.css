@@ -1,0 +1,88 @@
+/* template for file orgModeAndPandocForTechnicalWriting_ConTeXt */
+
+@namespace context url('http://www.contextgarden.net/context/export') ;
+
+
+/* element="document" detail="" chain="" */
+
+document,
+div.document {
+    display: block ;
+}
+
+/* element="list" detail="" chain="" */
+
+list,
+div.list {
+    display: block ;
+}
+
+/* element="listcontent" detail="" chain="" */
+
+listcontent,
+div.listcontent {
+    display: inline ;
+}
+
+/* element="listitem" detail="chapter" chain="" */
+
+listitem[detail=chapter],
+div.listitem.chapter {
+    display: block ;
+}
+
+/* element="listitem" detail="section" chain="" */
+
+listitem[detail=section],
+div.listitem.section {
+    display: block ;
+}
+
+/* element="listpage" detail="" chain="" */
+
+listpage,
+div.listpage {
+    display: inline ;
+}
+
+/* element="listtag" detail="" chain="" */
+
+listtag,
+div.listtag {
+    display: inline ;
+}
+
+/* element="section" detail="title" chain="title" */
+
+section[detail=title],
+div.section.title {
+    display: block ;
+}
+
+/* element="sectioncaption" detail="" chain="" */
+
+sectioncaption,
+div.sectioncaption {
+    display: block ;
+}
+
+/* element="sectioncontent" detail="" chain="" */
+
+sectioncontent,
+div.sectioncontent {
+    display: block ;
+}
+
+/* element="sectiontitle" detail="" chain="" */
+
+sectiontitle,
+div.sectiontitle {
+    display: inline ;
+}
+
+/* element="verbatim" detail="" chain="" */
+
+verbatim,
+div.verbatim {
+    display: inline ;
+}

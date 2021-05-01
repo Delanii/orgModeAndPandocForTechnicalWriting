@@ -1,0 +1,13 @@
+#+BEGIN_COMMENT
+!!Basic HTML styling!!
+#+END_COMMENT
+
+#+HTML_HEAD: <style>code {background-color: #F5F5F5;}</style>
+
+#+BEGIN_COMMENT
+!!Macro definitions!!
+#+END_COMMENT
+
+#+MACRO: latex @@latex:\LaTeX\@@ @@html:LaTeX@@
+#+MACRO: citation @@latex:\cite{$1}@@ @@html:<a href="#cite-$1"><cite>$2</cite></a>@@
+#+MACRO: glsEntry @@latex:\gls{$1}@@ @@html:$2@@ @@odt:<text:span>$2</text:span>@@

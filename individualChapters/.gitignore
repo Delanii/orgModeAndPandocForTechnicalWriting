@@ -1,0 +1,4 @@
+# Ignore copies of pictures folder and converter, sice those are copies of sources
+#
+pictures/
+picturesConverterBase64.sh

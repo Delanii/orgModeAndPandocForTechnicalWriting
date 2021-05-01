@@ -1,0 +1,268 @@
+%==============================
+% NASTAVENÍ JAZYKA
+%==============================
+
+\mainlanguage[$lang$]
+
+% make chapter, section bookmarks visible when opening document
+\placebookmarks[chapter, section, subsection, subsubsection, subsubsubsection, subsubsubsubsection][chapter]
+\setupinteractionscreen[option=bookmark]
+
+$if(papersize)$
+  \setuppapersize[$for(papersize)$$papersize$$sep$,$endfor$]
+$endif$
+
+$if(layout)$
+  \setuplayout[$for(layout)$$layout$$sep$,$endfor$]
+$endif$
+
+%==============================
+% NASTAVENÍ EXPORTU
+%==============================
+
+$if(pdfa)$
+% attempt to generate PDF/A
+\setupbackend
+  [format=PDF/A-$pdfa$,
+   profile={$if(pdfaiccprofile)$$for(pdfaiccprofile)$$pdfaiccprofile$$sep$,$endfor$$else$sRGB.icc$endif$},
+   intent=$if(pdfaintent)$$pdfaintent$$else$sRGB IEC61966-2.1$endif$]
+$endif$
+
+\setupbackend[export=yes]
+\setupstructure[state=start,method=auto]
+
+%==============================
+% NASTAVENÍ TYPOGRAFIE A FONTŮ
+%==============================
+
+% use microtypography
+\definefontfeature[default][default][script=latn, protrusion=quality, expansion=quality, itlc=yes, textitalics=yes, onum=yes, pnum=yes]
+\definefontfeature[smallcaps][script=latn, protrusion=quality, expansion=quality, smcp=yes, onum=yes, pnum=yes]
+\setupalign[hz,hanging]
+\setupitaliccorrection[global, always]
+
+\setupbodyfontenvironment[default][em=italic] % use italic as em, not slanted
+
+\definefallbackfamily[mainface][rm][CMU Serif][preset=range:greek, force=yes]
+\definefontfamily[mainface][rm][$if(mainfont)$$mainfont$$else$Latin Modern Roman$endif$]
+\definefontfamily[mainface][mm][$if(mathfont)$$mathfont$$else$Latin Modern Math$endif$]
+\definefontfamily[mainface][ss][$if(sansfont)$$sansfont$$else$Latin Modern Sans$endif$]
+\definefontfamily[mainface][tt][$if(monofont)$$monofont$$else$Latin Modern Typewriter$endif$][features=none]
+\setupbodyfont[mainface$if(fontsize)$,$fontsize$$endif$]
+
+\setupwhitespace[$if(whitespace)$$whitespace$$else$small$endif$]
+
+$if(indenting)$
+\setupindenting[$for(indenting)$$indenting$$sep$,$endfor$]
+$endif$
+
+$if(interlinespace)$
+\setupinterlinespace[$for(interlinespace)$$interlinespace$$sep$,$endfor$]
+$endif$
+
+%------------------------------------------------------------------------
+%	NASTAVENÍ PEVNÉ MEZERY
+%-----------------------------------------------------------------------
+
+\startluacode
+local glyph_id = node.id("glyph")
+local glue_id = node.id("glue")
+
+function userdata.prevent_single_letter(head)
+    local cur = head
+    while cur do
+        if cur.id == glyph_id and
+           cur.prev and
+           cur.next and
+           cur.prev.id == glue_id and
+           cur.next.id == glue_id
+        then
+            local p = node.new("penalty")
+            p.penalty = 10000
+            node.insert_after(head,cur,p)
+        end
+        cur = cur.next
+    end
+    return head, true
+end
+\stopluacode
+
+\startluacode
+nodes.tasks.appendaction("processors", "before", "userdata.prevent_single_letter")
+\stopluacode
+
+\setuphead[chapter]            [style=\tfd,header=empty]
+\setuphead[section]            [style=\tfc]
+\setuphead[subsection]         [style=\tfb]
+\setuphead[subsubsection]      [style=\bf]
+\setuphead[subsubsubsection]   [style=\sc]
+\setuphead[subsubsubsubsection][style=\it]
+
+$if(number-sections)$
+$else$
+  \setuphead[chapter, section, subsection, subsubsection, subsubsubsection, subsubsubsubsection][number=no]
+$endif$
+
+%------------------------------------------------------------------------
+%	NASTAVENÍ ZÁHLAVÍ A ZÁPATÍ
+%-----------------------------------------------------------------------
+
+$if(pagenumbering)$
+  \setuppagenumbering[$for(pagenumbering)$$pagenumbering$$sep$,$endfor$]
+$else$
+  \setuppagenumbering[alternative=doublesided,%
+  location={footer,middle}]
+$endif$
+
+$-- % Příklad:
+$-- %\setupheadertexts[text]
+$-- %[Poznámky][section]
+$-- %[Poznámky][chapter]
+
+$if(headertext)$
+  \setupheadertexts$for(headertext)$[$headertext$]$endfor$
+$endif$
+
+$if(footertext)$
+  \setupfootertexts$for(footertext)$[$footertext$]$endfor$
+$endif$
+
+%------------------------------------------------------------------------
+%	NASTAVENÍ SEZNAMŮ
+%-----------------------------------------------------------------------
+
+\definedescription
+  [description]
+  [headstyle=\bf, width=broad, alternative=top]
+
+\setupitemize[autointro]    % prevent orphan list intro
+\setupitemize[indentnext=no]
+\setupitemize[2][columns,2][width=2em]
+
+%------------------------------------------------------------------------
+%	VYUŽITÍ BUFFERŮ
+%-----------------------------------------------------------------------
+
+\startluacode
+    userdata = userdata or { }
+    function userdata.addTempToBuffer(buffername)
+        buffers.append(
+            buffername,
+            '\n' .. buffers.getcontent('APPENDTEMP')
+        )
+    end
+\stopluacode
+
+\def\startappendbuffer[#1]%
+{\def\stopappendbuffer%
+      {\ctxlua{userdata.addTempToBuffer('#1')}}
+   \dostartbuffer[APPENDTEMP][startappendbuffer][stopappendbuffer]}
+
+
+
+\setupthinrules[width=15em] % width of horizontal rules
+
+\setupxtable[frame=off]
+\setupxtable[head][topframe=on,bottomframe=on]
+\setupxtable[body][]
+\setupxtable[foot][bottomframe=on]
+
+$if(includesource)$
+  $for(sourcefile)$
+    \attachment[file=$curdir$/$sourcefile$,method=hidden]
+  $endfor$
+$endif$
+
+%==============================
+% NAČTENÍ MODULŮ
+%==============================
+
+\usemodule[units]
+\usemodule[filter]
+
+%==============================
+% NASTAVENÍ INTERAKCE
+%==============================
+
+\setupnumbering[way=bychapter]
+
+\setupsynctex[state=start,method=min]
+
+% Enable hyperlinks
+\setupinteraction
+  [state=start,
+  $if(title)$
+    title={$title$},
+  $endif$
+  $if(subtitle)$
+    subtitle={$subtitle$},
+  $endif$
+  $if(author)$
+    author={$for(author)$$author$$sep$; $endfor$},
+  $endif$
+  $if(keywords)$
+    keyword={$for(keywords)$$keywords$$sep$; $endfor$},
+  $endif$
+  style=$linkstyle$,
+  color=$if(linkcolor)$$linkcolor$$else$black$endif$,
+  contrastcolor=$linkcontrastcolor$,
+  style=\normal]
+
+%==============================
+% DALŠÍ NASTAVENÍ
+%==============================
+
+$for(header-includes)$
+  $header-includes$
+$endfor$
+
+\starttext
+$if(title)$
+  \startalignment[middle]
+    {\tfd\setupinterlinespace $title$}
+  $if(subtitle)$
+    \smallskip
+    {\tfa\setupinterlinespace $subtitle$}
+  $endif$
+  $if(author)$
+    \smallskip
+    {\tfa\setupinterlinespace $for(author)$$author$$sep$\crlf $endfor$}
+  $endif$
+  $if(date)$
+    \smallskip
+    {\tfa\setupinterlinespace $date$}
+  $endif$
+  \bigskip
+  \stopalignment
+$endif$
+
+$if(abstract)$
+  \midaligned{\it Abstract}
+  \startnarrower[2*middle]
+  $abstract$
+  \stopnarrower
+  \blank[big]
+$endif$
+
+$for(include-before)$
+  $include-before$
+$endfor$
+
+$if(toc)$
+  \completecontent
+$endif$
+
+$if(lot)$
+  \completelistoftables
+$endif$
+
+$if(lof)$
+  \completelistoffigures
+$endif$
+
+$body$
+
+$for(include-after)$
+  $include-after$
+$endfor$
+\stoptext
