@@ -268,9 +268,33 @@ git add --all
 
 that add all modified, new or deleted files to next snapshot commit.
 
-After adding file to the next future repository snapshot you have to create that snapshot with =git commit= command. When you issue this command as is, =git= launches text editor specified as =core.editor= (in [[*Basic setup]] [[#B]] we specified this editor to be =emacs=) to write commit message. The message usually works as description what has been changed with this commit. In the editor text you will also have output of =git status= commented out to remind you what changes are you committing to new repository snapshot.
+After adding file to the next future repository snapshot you have to create that snapshot with command
 
-This is useful if you want to write long commit message. Otherwise, firing up your editor to write a commit message might be a little clunky.
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git commit
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+When you issue this command as is, =git= launches text editor specified as =core.editor= (in [[*Basic setup]] [[#B]] we specified this editor to be =emacs=) to write commit message. The message usually works as description what has been changed with this commit. In the editor text you will also have output of =git status= commented out to remind you what changes are you committing to new repository snapshot. If you want to see even more information when writing your commit message you can use command =git commit -v=, which outputs to your editor also =git diff= output.
+
+This is useful if you want to write long commit message. Otherwise, firing up your editor to write a commit message might be a little clunky. To write down commit message directly into =git commit= command use the =-m= flag like so:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git commit -m "Commit message."
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+And finally, if you know that you want to commit to next repository snapshot all staged and modified unstaged files, and you dont want to hassle with =git add= command, you can use
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git commit -a -m "Commit message."
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+which does exactly that.
 
 ** Setting ignored files to =git=
 
@@ -290,9 +314,31 @@ You can also ignore full directories. In that case you simply write name of the 
 dirname/
 #+END_EXAMPLE
 
-%%Záložka: progit str. 31%%
-
 ** File operations in =git= repository
+
+*** Removing files from =git=
+
+You most assuredly know how to delete files from your computer. In =git= terms, from your local working tree that is. But, if you delete a file in your working tree check =git status= you get information, that this change is recognized and not staged for commit. For staging file deletion also to =git= you have to use =git rm= command:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git rm redundant.tmp
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+After next commit the file will be gone from your local working tree and also from =git= tracking. If you have the file already in staging area you have to use =-f= flag to force its removal.
+
+Another remove operation you might need is to get rid of file, that is staged and already tracked, but you dont want to delete it from your local working tree. That could occur in case you forgot to put a file in =.gitignore= file and you are tracking its versions overthought you dont need it. In that case you need to use =--cached= flag to =git rm= command:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git rm --cached redundant.tmp
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+*** Moving files in repository
+
+%%Záložka: str. 38%%
 
 ** Disclaimer
 
