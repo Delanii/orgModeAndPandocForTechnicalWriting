@@ -30,6 +30,10 @@ _minted-orgModeAndPandocForTechnicalWriting_pandocExport/
 #
 resources/
 
+# Also having release folder seems to not make sense for git
+
+release/
+
 # Ignore todos and its archive, since again there are notes not worth version tracking
 #
 TODOs.org
