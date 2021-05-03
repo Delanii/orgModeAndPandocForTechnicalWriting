@@ -30,9 +30,10 @@ _minted-orgModeAndPandocForTechnicalWriting_pandocExport/
 #
 resources/
 
-# Also having release folder seems to not make sense for git
+# Also having release and individualChapters folders in =git= seems to confuse git, or doesnt make sense to it.
 
 release/
+individualCHapters/
 
 # Ignore todos and its archive, since again there are notes not worth version tracking
 #
