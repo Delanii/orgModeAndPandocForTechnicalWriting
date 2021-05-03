@@ -33,7 +33,7 @@ resources/
 # Also having release and individualChapters folders in =git= seems to confuse git, or doesnt make sense to it.
 
 release/
-individualCHapters/
+individualChapters/
 
 # Ignore todos and its archive, since again there are notes not worth version tracking
 #
