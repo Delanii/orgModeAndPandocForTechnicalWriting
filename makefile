@@ -253,10 +253,10 @@ docxExportPandoc : ${mainOrgSource} ${orgChapterFiles} ${pandocDOCXExportSetting
 	mv src/pandocDOCXLog.log pandocDOCXLog.log
 	mv src/${docxFullBookPandocExport} ${docxFullBookPandocExport}
 
-.PHONY clean :
+.PHONY : clean
 clean :
 	rm -Rf *.log *.tex *.gz *.out *.aux *.toc *.lot *.lof *.lol *.pyg *.listing *.bcf *.glg* *.glo* *.gls* *.ist *.run.xml *.bbl *.blg *.synctex *.tuc *.lua *.pytxcode ./_minted-main ./_minted-orgModeAndPandocForTechnicalWriting_pandocExport ./src/.auctex-auto ./individualChapters/pictures ./individualChapters/picturesConverterBase64.sh # -R removes folders, -f makes `rm` not error when file is not found.
 
-.PHONY purge :
+.PHONY : purge
 purge: clean
 	rm -Rf *.pdf *.html *.odt *.docx ${chaptersLocation} ./orgModeAndPandocForTechnicalWriting_ConTeXt-export ./release

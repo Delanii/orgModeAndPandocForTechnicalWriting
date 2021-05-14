@@ -339,9 +339,67 @@ git rm --cached redundant.tmp
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
 
+If you try to remove directory that way =git= informs you that you have to add =-r= flag to the command, like so:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git rm --cached -r folder/
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+These are just multiple safety measures to prevent from accidentally removing files or folders from =git= tracking. You have to be very specific with these commands, which also means that you have to be pretty much conscious about it.
+
 *** Moving files in repository
 
-%%Záložka: str. 38%%
+=git= doesn't have a notion about moving a file in a repository. =git= has a =git mv= command, that can be used like so:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git mv previous-file.txt new-file.txt
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+But according to {{{citation(progit,Pro Git Book)}}} it is mostly a convenience command for
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+mv previous-file.txt new-file.txt
+git rm previous-file.txt
+git add new-file.txt
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+** Viewing commit history
+
+After some time working with =git= repository you might want to view repository commit history. For that there is a simple command:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports both
+git log
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+After issuing this command you enter interface similar to =manpage=, =cat= or =less= command output -- you can scroll the page with =<up>= or =<down>= arrows. When you see =END= written in the bottom of terminal window then you have reached the end of =git= repository history. You can end the pager anytime by pressing =q= which will return you to terminal window.
+
+=git= repository history is displayed in reverse chronological order -- newest commit is first, then goes previous, etc ...
+
+{{{citation(progit,Pro Git Book)}}} mentions few usable options to =git log= command.
+
+- =git log --patch= or =git log -p= : shows the difference between repository snapshots introduced by each commit
+- =git log -1= or any other number : limits =git log= output to /n/ commit entries. You can combine it with =-patch= option
+- =git log --stat= : outputs abbreviated output compared to =--patch= option, giving just summaries of how many files were modified and how much rows were changed
+- =git log --pretty=format:"<format>"= : powerful option to generate your own format of =git log= output. {{{citation(progit,Pro Git Book)}}} gives good description of a lot of usable formats.
+- =git log --graph= : displays ASCII graph of repository history, including branches
+- =git log --after= : displays commits that happened /after/ specified date in absolute format /YYYY-MM-DD/ or relative
+- =git log --grep "text"= : displays only commits with =text= in theyre commit message
+- =git log -S myFunction= : searches for commits that introduced =myFunction= in theyre changes to repository
+- =git log -- path/to/file= : searches for commits that introduced changed to specified =file=
+
+** Making undos and amends
+
+
+
+%%Záložka: str. 46%%
 
 ** Disclaimer
 
