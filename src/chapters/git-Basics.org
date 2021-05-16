@@ -186,7 +186,7 @@ As you work with your project files, you modify them. If you have added them to 
 The main command to find out status of all the files in your repository, that means whether they are /untracked/, /modified/, /staged/, or in-sync with git repository snapshot; as defined [[target:gitFileStates][above]].
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git status
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -204,7 +204,7 @@ For example, identifier =MM= means that file was modified, staged and then modif
 To get more detailed view of changes in your repository you can use =git diff= command. The basic command
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git diff
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -212,7 +212,7 @@ git diff
 compares state of your working tree with the current contents of staging area. This command shows what changes you have made, but not yet staged since last commit. The other information you might need is the difference between last commit and content of staging area. Next command does that:
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git diff --staged
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -220,7 +220,7 @@ git diff --staged
 If the default difference view from =git= in terminal is not suitable for you, or you want to use different tool for viewing repository changes, you can use command
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git difftool
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -228,7 +228,7 @@ git difftool
 This command uses application of your choosing to view changes. Command =git difftool --tool-help= lists all applications available to be used by =git difftool= command. You may also configure default =difftool= with =git config= (as =git= informs you when you run this command first time) like so:
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git config --global diff.tool vimdiff
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -240,7 +240,7 @@ that uses =vim= text editor as program to view changes. Again, when we get to =m
 In order to begin tracking new file you have to /add/ it to =git= tracking list via =git add= command. For example, if you want t start tracking file =test.org=, you would issue following command in terminal:
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git add test.org
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -256,7 +256,7 @@ Modify a file that is already tracked by =git= and check output of =git status= 
 =git= informs you that there is a modified file that is not staged for commit. Lets remedy that by putting it into staging area with command =git add=. As was stated already, =git add= command has multiple use cases. All of them lead to adding file in its current state to =git= staging area. If the file is /untracked/, after commit is part of next and following project snapshots, until removed. If /added/ file is already /tracked/, =git= puts its contents again into staging area for next commit.
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git add test.org
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -264,7 +264,7 @@ git add test.org
 If you have more than one modified file and you want to add them all to next repository snapshot you can use command
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git add --all
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -274,7 +274,7 @@ that add all modified, new or deleted files to next snapshot commit.
 After adding file to the next future repository snapshot you have to create that snapshot with command
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git commit
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -284,7 +284,7 @@ When you issue this command as is, =git= launches text editor specified as =core
 This is useful if you want to write long commit message. Otherwise, firing up your editor to write a commit message might be a little clunky. To write down commit message directly into =git commit= command use the =-m= flag like so:
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git commit -m "Commit message."
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -292,7 +292,7 @@ git commit -m "Commit message."
 And finally, if you know that you want to commit to next repository snapshot all staged and modified unstaged files, and you dont want to hassle with =git add= command, you can use
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git commit -a -m "Commit message."
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -324,7 +324,7 @@ dirname/
 You most assuredly know how to delete files from your computer. In =git= terms, from your local working tree that is. But, if you delete a file in your working tree check =git status= you get information, that this change is recognized and not staged for commit. For staging file deletion also to =git= you have to use =git rm= command:
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git rm redundant.tmp
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -334,7 +334,7 @@ After next commit the file will be gone from your local working tree and also fr
 Another remove operation you might need is to get rid of file, that is staged and already tracked, but you dont want to delete it from your local working tree. That could occur in case you forgot to put a file in =.gitignore= file and you are tracking its versions overthought you dont need it. In that case you need to use =--cached= flag to =git rm= command:
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git rm --cached redundant.tmp
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -342,7 +342,7 @@ git rm --cached redundant.tmp
 If you try to remove directory that way =git= informs you that you have to add =-r= flag to the command, like so:
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git rm --cached -r folder/
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -354,7 +354,7 @@ These are just multiple safety measures to prevent from accidentally removing fi
 =git= doesn't have a notion about moving a file in a repository. =git= has a =git mv= command, that can be used like so:
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git mv previous-file.txt new-file.txt
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
@@ -362,7 +362,7 @@ git mv previous-file.txt new-file.txt
 But according to {{{citation(progit,Pro Git Book)}}} it is mostly a convenience command for
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 mv previous-file.txt new-file.txt
 git rm previous-file.txt
 git add new-file.txt
@@ -374,7 +374,7 @@ git add new-file.txt
 After some time working with =git= repository you might want to view repository commit history. For that there is a simple command:
 
 #+LATEX: \begin{bashlistingbox}
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh :exports code
 git log
 #+END_SRC
 #+LATEX: \end{bashlistingbox}
