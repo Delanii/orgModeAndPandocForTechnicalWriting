@@ -160,7 +160,7 @@ pdfEmacs : ${araraSettings} texEmacs
 	mv main.pdf ${fullPdfBookEmacs}
 
 texEmacs : ${mainOrgSource} ${orgChapterFiles} ${LaTeXSettings} ${DoomEmacsExportConfig} ${orgMacroDefinitions}
-	emacs -nw ${mainOrgSource} -l ${DoomEmacsExportConfig} -f org-latex-export-to-latex --kill
+	emacs -nw ${mainOrgSource} -f org-latex-export-to-latex --kill
 	mv src/main.tex ${fullLaTeXBook}
 
 # Building HTML files
