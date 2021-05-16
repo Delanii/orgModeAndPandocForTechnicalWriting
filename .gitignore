@@ -35,6 +35,10 @@ resources/
 release/
 individualChapters/
 
+*.pdf
+*.html
+*.odt
+
 # Ignore todos and its archive, since again there are notes not worth version tracking
 #
 TODOs.org
