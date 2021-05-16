@@ -8,10 +8,10 @@
 #
 DOOMDIR = ~/.doom.d
 
+doomEmacsExportSettings = ~/.doom.d/config.el
+
 # Main Configurations
 # #############################
-
-DoomEmacsExportConfig = ~/.doom.d/exportConfig.el
 
 chaptersLocation = individualChapters
 
@@ -159,7 +159,7 @@ pdfEmacs : ${araraSettings} texEmacs
 	arara --log --verbose --preamble fullcompile ${fullLaTeXBook}
 	mv main.pdf ${fullPdfBookEmacs}
 
-texEmacs : ${mainOrgSource} ${orgChapterFiles} ${LaTeXSettings} ${DoomEmacsExportConfig} ${orgMacroDefinitions}
+texEmacs : ${mainOrgSource} ${orgChapterFiles} ${LaTeXSettings} ${orgMacroDefinitions} ${doomEmacsExportSettings}
 	emacs -nw ${mainOrgSource} -f org-latex-export-to-latex --kill
 	mv src/main.tex ${fullLaTeXBook}
 
@@ -169,17 +169,17 @@ texEmacs : ${mainOrgSource} ${orgChapterFiles} ${LaTeXSettings} ${DoomEmacsExpor
 #
 # Full blog HTML
 #
-htmlExportEmacs : ${mainOrgSource} ${orgChapterFiles} ${orgMacroDefinitions} ${htmlFullBookEmacsSettings}
-	emacs ${mainOrgSource} -nw -l ${DoomEmacsExportConfig} -f org-html-export-to-html --kill # =-nv= creates emacs window. It is impractical, but reportedly there is no better solution ... HTML source block colorization requires =font-lock= to colorize, and that gets started only while drawing emacs window.
+htmlExportEmacs : ${mainOrgSource} ${orgChapterFiles} ${orgMacroDefinitions} ${htmlFullBookEmacsSettings} ${doomEmacsExportSettings}
+	emacs ${mainOrgSource} -nw -f org-html-export-to-html --kill # =-nv= creates emacs window. It is impractical, but reportedly there is no better solution ... HTML source block colorization requires =font-lock= to colorize, and that gets started only while drawing emacs window.
 	mv src/main.html ${htmlFullBookEmacsExport}
 
 # Exporting individual chapters
 #
-chaptersEmacs : ${mainOrgSource} ${orgChapterFiles} ${setupfileIndividualChapters}
+chaptersEmacs : ${mainOrgSource} ${orgChapterFiles} ${setupfileIndividualChapters} ${doomEmacsExportSettings}
 	mkdir -p ${chaptersLocation}
-	emacs src/chapters/introduction.org -nw -l ${DoomEmacsExportConfig} -f org-html-export-to-html --kill
-	emacs src/chapters/git-Basics.org -nw -l ${DoomEmacsExportConfig} -f org-html-export-to-html --kill
-	emacs src/chapters/exportToLaTex-Basics.org -nw -l ${DoomEmacsExportConfig} -f org-html-export-to-html --kill
+	emacs src/chapters/introduction.org -nw -f org-html-export-to-html --kill
+	emacs src/chapters/git-Basics.org -nw -f org-html-export-to-html --kill
+	emacs src/chapters/exportToLaTex-Basics.org -nw -f org-html-export-to-html --kill
 	mv src/chapters/*.html ${chaptersLocation}
 	rm -f ${chaptersLocation}/setupfileIndividualChapters.html
 	rm -Rf ${chaptersLocation}/pictures
@@ -191,8 +191,8 @@ chaptersEmacs : ${mainOrgSource} ${orgChapterFiles} ${setupfileIndividualChapter
 
 # Exporting with org-mode to .odt
 #
-odtExportEmacs : ${mainOrgSource} ${orgChapterFiles} ${odtStylesFile}
-	emacs ${mainOrgSource} -nw -l ${DoomEmacsExportConfig} -f org-odt-export-to-odt --kill
+odtExportEmacs : ${mainOrgSource} ${orgChapterFiles} ${odtStylesFile} ${doomEmacsExportSettings}
+	emacs ${mainOrgSource} -nw -f org-odt-export-to-odt --kill
 	mv src/main.odt ${odtFullBookEmacsExport}
 
 ######################################
