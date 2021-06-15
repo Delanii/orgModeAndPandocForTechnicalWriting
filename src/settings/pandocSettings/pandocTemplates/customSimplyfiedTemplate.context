@@ -139,6 +139,9 @@ $endif$
 \setupitemize[indentnext=no]
 \setupitemize[2][columns,2][width=2em]
 
+\defineitemgroup[enumerate]
+\setupenumerate[each][fit][itemalign=left,distance=.5em,style={\feature[+][default:tnum]}]
+
 %------------------------------------------------------------------------
 %	VYUŽITÍ BUFFERŮ
 %-----------------------------------------------------------------------
