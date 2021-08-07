@@ -30,6 +30,10 @@ _minted-orgModeAndPandocForTechnicalWriting_pandocExport/
 #
 resources/
 
+# Ignore MWEs folder, since there are tests for issues to be fixed
+#
+MWEs/
+
 # Also having release and individualChapters folders in =git= seems to confuse git, or doesnt make sense to it.
 
 release/

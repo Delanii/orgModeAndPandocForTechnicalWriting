@@ -99,5 +99,5 @@
 #+END_COMMENT
 
 #+LATEX: \printbibheading
-#+LATEX: \addcontentsline{toc}{chapter}{Reference}
+#+LATEX: \addcontentsline{toc}{chapter}{References}
 #+LATEX: \bibbycategory

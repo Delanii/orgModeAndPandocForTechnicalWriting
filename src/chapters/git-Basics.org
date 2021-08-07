@@ -397,9 +397,35 @@ After issuing this command you enter interface similar to =manpage=, =cat= or =l
 
 ** Making undos and amends
 
+As one of the more powerful changes to commits you can /amend/ a commit. The command is invoked like this:
 
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports code
+git commit --amend
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
 
-%%Záložka: str. 46%%
+This command takes your current staging area and /replaces/ (not /appends/) its contents with content of the last commit.
+
+Another option to manipulate with staging area is to "unstage" already staged file. One option is to use command:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports code
+git restore --staged file.txt
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+which removes =file.txt= from staging area.
+
+In the other way around, if you want to discard local changes to a file and restore it to its state in last commit you have to use command:
+
+#+LATEX: \begin{bashlistingbox}
+#+BEGIN_SRC sh :exports code
+git restore file.txt
+#+END_SRC
+#+LATEX: \end{bashlistingbox}
+
+%%Záložka: str. 50%%
 
 ** Disclaimer
 
