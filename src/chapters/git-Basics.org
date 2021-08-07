@@ -20,7 +20,7 @@ One of those {{{glsEntry(dvcs,DVCS)}}} is =git=. It is one of the most used {{{g
 
 Little contrary to previous description of the version control systems, =git= does not store changes to a file in time. Instead, =git= is taking snapshots of the whole repository filesystem in each commit. If there were no changes to an particular file compared to previous commit, =git= just stores reference to that file. =git= have uses hashes. Everything in =git= is checksummed with SHA-1 hash. SHA-1 hash is 40 character string consisting of hexadecimal characters (0 -- 9 and a -- f) and calculated based on the file contents. All of =git= actions only add data. It takes an effort to make =git= erase any data.
 
-#+CAPTION: =git= storing data as snapshots of the project over time, source: Pro Git Book, @@latex:\protect\cite{progit}@@ @@html: <a href="#cite-progit">here</a>@@
+#+CAPTION[=git= storing data as snapshots of the project over time]: =git= storing data as snapshots of the project over time, source: Pro Git Book, @@latex:\protect\cite{progit}@@ @@html: <a href="#cite-progit">here</a>@@
 #+NAME: fig:git-basics_snapshots
 [[../pictures/git-basics_snapshots.png]]
 
@@ -36,7 +36,7 @@ Little contrary to previous description of the version control systems, =git= do
 - staging area (file that stores information about staged files)
 - =.git= directory (stores database of all the objects in your project)
 
-#+CAPTION: Main parts of =git= project repository, source: Pro Git Book, @@latex:\protect\cite{progit}@@ @@html: <a href="#cite-progit">here</a>@@
+#+CAPTION[Main parts of =git= project repository]: Main parts of =git= project repository, source: Pro Git Book, @@latex:\protect\cite{progit}@@ @@html: <a href="#cite-progit">here</a>@@
 #+NAME: fig:git-basics_areas
 [[../pictures/git-basics_areas.png]]
 
@@ -177,7 +177,7 @@ Basic workflow with =git= could be described as follows:
 
 As you work with your project files, you modify them. If you have added them to =git= tracking, =git= sees them as /modified/, because you changed them from last commit. When you want to make another "version," or project snapshot, you can selectively add each modified file with =git add=, or you can use =--all= flag to add all modified files to =git= staging area. =git add= command is multipurpose command, so you will definitely use it a lot. Finally, you /commit/ all the staged files to =git= with =git commit -m "Informative message."= to create new snapshot of files tracked by =git=.
 
-#+CAPTION: =git= workflow and file status changes as you work with them, source: Pro Git Book, @@latex:\protect\cite{progit}@@ @@html:<a href="#cite-progit">here</a>@@
+#+CAPTION[=git= workflow and file status changes as you work with them]: =git= workflow and file status changes as you work with them, source: Pro Git Book, @@latex:\protect\cite{progit}@@ @@html:<a href="#cite-progit">here</a>@@
 #+NAME: fig:git-basics_areas
 [[../pictures/git-basics_lifecycle.png]]
 

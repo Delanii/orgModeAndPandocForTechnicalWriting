@@ -23,6 +23,7 @@
 #+LATEX_HEADER: \addtokomafont{disposition}{\rmfamily}
 #+LATEX_HEADER: \addtokomafont{title}{\normalfont}
 #+LATEX_HEADER: \addtokomafont{pageheadfoot}{\normalfont}
+#+LATEX_HEADER: \addtokomafont{descriptionlabel}{\normalfont\bfseries}
 
 #+BEGIN_COMMENT
 !!LaTeX page settings!!
