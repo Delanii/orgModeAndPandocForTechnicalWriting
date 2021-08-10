@@ -57,8 +57,8 @@
 #+HTML_HEAD:.org-italic { /* italic */ font-style: italic; }
 #+HTML_HEAD:.org-keyword { /* font-lock-keyword-face */ color: #0086b3; }
 #+HTML_HEAD:.org-lazy-highlight { /* lazy-highlight */ background-color: #afeeee; }
-#+HTML_HEAD:.org-link { /* link */ color: #0000ff; text-decoration: underline; }
-#+HTML_HEAD:.org-link-visited { /* link-visited */ color: #8b008b; text-decoration: underline; }
+#+HTML_HEAD:.org-link { /* link */ color: #279B0B; } /* Original: color: #0000ff; text-decoration: underline;*/
+#+HTML_HEAD:.org-link-visited { /* link-visited */ color: #9924E0; } /* Original: color: #8b008b; text-decoration: underline; */
 #+HTML_HEAD:.org-log-edit-header { /* log-edit-header */ color: #a020f0; }
 #+HTML_HEAD:.org-log-edit-summary { /* log-edit-summary */ color: #0000ff; }
 #+HTML_HEAD:.org-log-edit-unknown-header { /* log-edit-unknown-header */ color: #b22222; }
@@ -81,7 +81,7 @@
 #+HTML_HEAD:.org-org-document-info-keyword { /* org-document-info-keyword */ color: #7f7f7f; }
 #+HTML_HEAD:.org-org-document-title { /* org-document-title */ color: #191970; font-size: 144%; font-weight: bold; }
 #+HTML_HEAD:.org-org-done { /* org-done */ color: #228b22; font-weight: bold; }
-#+HTML_HEAD:.org-org-drawer { /* org-drawer */ color: #0000ff; }
+#+HTML_HEAD:.org-org-drawer { /* org-drawer */ color: #279B0B; } /* Original: color: #0000ff; text-decoration: underline;*/
 #+HTML_HEAD:.org-org-ellipsis { /* org-ellipsis */ color: #b8860b; text-decoration: underline; }
 #+HTML_HEAD:.org-org-footnote { /* org-footnote */ color: #a020f0; text-decoration: underline; }
 #+HTML_HEAD:.org-org-formula { /* org-formula */ color: #b22222; }
@@ -96,7 +96,7 @@
 #+HTML_HEAD:.org-org-level-6 { /* org-level-6 */ color: #008b8b; }
 #+HTML_HEAD:.org-org-level-7 { /* org-level-7 */ color: #7a378b; }
 #+HTML_HEAD:.org-org-level-8 { /* org-level-8 */ color: #8b2252; }
-#+HTML_HEAD:.org-org-link { /* org-link */ color: #0000ff; text-decoration: underline; }
+#+HTML_HEAD:.org-org-link { /* org-link */ color: #279B0B; } /* Original: color: #0000ff; text-decoration: underline; */
 #+HTML_HEAD:.org-org-meta-line { /* org-meta-line */ color: #b22222; }
 #+HTML_HEAD:.org-org-mode-line-clock { /* org-mode-line-clock */ color: #000000; background-color: #bfbfbf; }
 #+HTML_HEAD:.org-org-mode-line-clock-overrun { /* org-mode-line-clock-overrun */ color: #000000; background-color: #ff0000; }
@@ -445,7 +445,7 @@
 #+HTML_HEAD:    max-width:100%;
 #+HTML_HEAD:    overflow-x:auto;
 #+HTML_HEAD:    padding:0 5px;
-#+HTML_HEAD:    white-space:nowrap;
+#+HTML_HEAD:    white-space:normal; /* Original: nowrap*/
 #+HTML_HEAD:}
 #+HTML_HEAD:
 #+HTML_HEAD:.codeblock-example{
@@ -585,7 +585,7 @@
 #+HTML_HEAD:    }
 #+HTML_HEAD:
 #+HTML_HEAD:    #toggle-sidebar {
-#+HTML_HEAD:        background-color: #2980B9;
+#+HTML_HEAD:        background-color: #2980B9; /* Original: #2980B9 */
 #+HTML_HEAD:        display: block;
 #+HTML_HEAD:        margin-bottom: 1.6em;
 #+HTML_HEAD:        padding: 0.6em;
@@ -808,7 +808,7 @@
 #+HTML_HEAD:    font-size:90%}
 #+HTML_HEAD:
 #+HTML_HEAD:a{
-#+HTML_HEAD:    color:#2980B9;
+#+HTML_HEAD:    color:#279B0B; /* Original: #2980B9*/
 #+HTML_HEAD:    text-decoration:none;
 #+HTML_HEAD:    cursor:pointer}
 #+HTML_HEAD:
@@ -818,10 +818,10 @@
 #+HTML_HEAD:}
 #+HTML_HEAD:
 #+HTML_HEAD:a:hover{
-#+HTML_HEAD:    color:#3091d1}
+#+HTML_HEAD:    color:#12E39A} /* Original: #3091d1*/
 #+HTML_HEAD:
 #+HTML_HEAD:a:visited{
-#+HTML_HEAD:    color:#9B59B6}
+#+HTML_HEAD:    color:#9924E0} /* Original: #9B59B6*/
 #+HTML_HEAD:
 #+HTML_HEAD:.left{
 #+HTML_HEAD:    text-align:left}
@@ -854,7 +854,7 @@
 #+HTML_HEAD:    font-weight:bold;
 #+HTML_HEAD:    text-transform:uppercase;
 #+HTML_HEAD:    font-size:80%;
-#+HTML_HEAD:    color:#2980B9;
+#+HTML_HEAD:    color:#2980B9; /* Original: #2980B9*/
 #+HTML_HEAD:    white-space:nowrap}
 #+HTML_HEAD:
 #+HTML_HEAD:#table-of-contents ul{
@@ -950,7 +950,7 @@
 #+HTML_HEAD:
 #+HTML_HEAD:#table-of-contents h2{
 #+HTML_HEAD:    z-index:200;
-#+HTML_HEAD:    background-color:#2980B9;
+#+HTML_HEAD:    background-color:#279B0B; /* Original: #2980B9*/
 #+HTML_HEAD:    text-align:center;
 #+HTML_HEAD:    padding:0.809em;
 #+HTML_HEAD:    display:block;
@@ -1095,7 +1095,7 @@
 #+HTML_HEAD:#postamble .date {
 #+HTML_HEAD:    font-size: 90%;
 #+HTML_HEAD:    margin-bottom: 0px;
-#+HTML_HEAD:    color: #27AE60;
+#+HTML_HEAD:    color: #fcfcfc; /* Origial: #27AE60 */
 #+HTML_HEAD:}
 #+HTML_HEAD:
 #+HTML_HEAD:#postamble .creator,#postamble .validation {
@@ -1113,7 +1113,7 @@
 #+HTML_HEAD:    text-align:right;
 #+HTML_HEAD:    font-size:90%;
 #+HTML_HEAD:    cursor:pointer;
-#+HTML_HEAD:    color:#27AE60;
+#+HTML_HEAD:    color: #fcfcfc; /* Original: #27AE60*/
 #+HTML_HEAD:    *zoom:1}
 #+HTML_HEAD:
 #+HTML_HEAD:#content img{
@@ -1429,13 +1429,13 @@
 #+HTML_HEAD:
 #+HTML_HEAD: cite::before {
 #+HTML_HEAD:   font-style: normal;
-#+HTML_HEAD:   color: blue;
+#+HTML_HEAD:   color: #279B0B;
 #+HTML_HEAD:   counter-increment: citation;
 #+HTML_HEAD:   content: "[" counter(citation) "] ";
 #+HTML_HEAD: }
 #+HTML_HEAD:
 #+HTML_HEAD: cite {
 #+HTML_HEAD:   font-style: normal;
-#+HTML_HEAD:   color:blue;
+#+HTML_HEAD:   color: #279B0B;
 #+HTML_HEAD: }
 #+HTML_HEAD: </style>
