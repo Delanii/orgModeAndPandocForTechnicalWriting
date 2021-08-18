@@ -26,13 +26,17 @@ _minted-main/
 _minted-orgModeAndPandocForTechnicalWriting_pandocExport/
 .auctex-auto/
 
-# Ignore "resources" folder, since there are some notes not fit for version control
+# Ignore `resources` folder, since there are some notes not fit for version control
 #
 resources/
 
-# Ignore MWEs folder, since there are tests for issues to be fixed
+# Ignore `MWEs` folder, since there are tests for issues to be fixed
 #
 MWEs/
+
+# Ignore `Tests` folder, since they are my tests, not tests connected with any application
+
+Tests/
 
 # Also having release and individualChapters folders in =git= seems to confuse git, or doesnt make sense to it.
 
